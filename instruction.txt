@@ -1,0 +1,85 @@
+📋 ИНСТРУКЦИЯ ПО РАЗВЁРТЫВАНИЮ И ЗАПУСКУ БОТА @ONBOARDING НА ПЛОЩАДКЕ‑МЕССЕНДЖЕРЕ MAX
+
+🗂️ Разархивировать папку с проектом (в итоге должна быть папка onboarding-bot).
+
+🖥️ С помощью средств терминала (консоли) перейти в папку onboarding-bot.
+
+🔮 Создать виртуальное окружение (папку, например, venv).
+
+🧰 В папку с виртуальным окружением установить необходимые зависимости — все библиотеки из файла requirements.txt.
+
+🔌 Активировать виртуальное окружение
+
+🌐 Убедиться в работоспособности VPN‑сервиса на локальном компьютере.
+
+🤖 Из терминала (консоли) или терминала IDE (PyCharm или VSCode), находясь в папке onboarding-bot/, выполнить команду:  python3 bot/max_main.py
+
+❗ Для ОС Windows — вместо python3 использовать python
+
+⏹ Для остановки бота зажать комбинацию клавиш Ctrl + C или Ctrl + D
+
+--------------------------------------------------------
+1.
+
+логин для sber_studio:    director@fps-rf.ru
+пароль для sber_studio:   Director@2025@fps
+
+2. Установка сертификата МинЦифры локально в виртуальное окружение
+curl -k "https://gu-st.ru/content/lending/russian_trusted_root_ca_pem.crt" -w "\n" >> $(python -m certifi)
+  
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  2088  100  2088    0     0  12812      0 --:--:-- --:--:-- --:--:-- 12809
+
+3. Скачиваем корневые и выпуска.щие сертификаты с портала Госуслуг для соответствующей операционной системы. https://www.gosuslugi.ru/crt
+
+Создаем папку для хранения сертификатов:
+            sudo mkdir /usr/local/share/ca-certificates/
+
+Скопируйте сертификаты в созданную папку:
+            sudo cp russian_trusted_root_ca_pem.crt russian_trusted_sub_ca_pem.crt /usr/local/share/ca-certificates/
+
+Обновить хранилища доверенных сертификатов от имени суперпользователя с помощью команды update-ca-certificates:
+            sudo update-ca-certificates
+
+Проверить наличие сертификата можно следующим образом:
+            ls /etc/ssl/certs | grep 'имя_вашего_сертификата'
+
+
+4. Для возможности обмена gRPC сообщениями необходимо установить переменную окружения:
+            export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="/usr/local/share/ca-certificates/russian_trusted_root_ca_gost_2025_pem.pem"
+
+5. Сгенерировал авторизационный ключ в личном кабинете в настройках API
+
+6. Установил библиотеку gigachat
+
+7. Обновил файл с зависимостями pip freeze > requirements.txt
+
+
+8. 
+Список моделей {"object":"list","data":[{"id":"GigaChat","object":"model","owned_by":"salutedevices","type":"chat"},{"id":"GigaChat-2","object":"model","owned_by":"salutedevices","type":"chat"},{"id":"GigaChat-2-Max","object":"model","owned_by":"salutedevices","type":"chat"},{"id":"GigaChat-2-Max-preview","object":"model","owned_by":"salutedevices","type":"chat"},{"id":"GigaChat-2-Pro","object":"model","owned_by":"salutedevices","type":"chat"},{"id":"GigaChat-2-Pro-preview","object":"model","owned_by":"salutedevices","type":"chat"},{"id":"GigaChat-2-preview","object":"model","owned_by":"salutedevices","type":"chat"},{"id":"GigaChat-Max","object":"model","owned_by":"salutedevices","type":"chat"},{"id":"GigaChat-Max-preview","object":"model","owned_by":"salutedevices","type":"chat"},{"id":"GigaChat-Plus","object":"model","owned_by":"salutedevices","type":"chat"},{"id":"GigaChat-Pro","object":"model","owned_by":"salutedevices","type":"chat"},{"id":"GigaChat-Pro-preview","object":"model","owned_by":"salutedevices","type":"chat"},{"id":"GigaChat-preview","object":"model","owned_by":"salutedevices","type":"chat"},{"id":"GigaCheckClassification","object":"model","owned_by":"salutedevices","type":"aicheck"},{"id":"GigaCheckDetection","object":"model","owned_by":"salutedevices","type":"aicheck"},{"id":"Embeddings","object":"model","owned_by":"salutedevices","type":"embedder"},{"id":"Embeddings-2","object":"model","owned_by":"salutedevices","type":"embedder"},{"id":"EmbeddingsGigaR","object":"model","owned_by":"salutedevices","type":"embedder"},{"id":"GigaEmbeddings-3B-2025-09","object":"model","owned_by":"salutedevices","type":"embedder"}]}
+
+
+# ------------------ информация по арендуемому хостингу ----------------------
+https://timeweb.cloud/
+
+почта: i.shabalin@fps-rf.ru
+
+Пароль для входа:   p1CzX@L9O5Y0
+Имя пользователя:   ya146824
+
+root пароль: gjdL3^ZS3z@1Ds
+ip-адрес:    85.239.33.100
+
+подключение по ssh:    ssh root@85.239.33.100
+
+пользователь:   fps_shabalin
+пароль:         shabalin_fps
+
+# -------------- запуск и остановка файла сервисной службы ------------------
+
+sudo systemctl enable onboarding_bot_giga.service     # включение службы в режим перезапуска
+sudo systemctl start onboarding_bot_giga.service      # старт бота
+sudo systemctl status onboarding_bot_giga.service     # проверка статуса службы
+sudo systemctl stop onboarding_bot_giga.service       # остановка бота
+sudo systemctl disable onboarding_bot_giga.service    # удаление из перезапуска
