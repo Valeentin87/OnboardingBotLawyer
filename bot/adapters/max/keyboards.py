@@ -73,6 +73,7 @@ def finish_studying_kb():
     
     return finish_kb.to_list()
 
+
 def change_course_to_export_stat_kb(courses_name: list[str]):
     '''Возвращает клавиатуру для выбора названия курса для выгрузки статистики'''
     export_stat_kb = KeyboardBuilder()
@@ -164,3 +165,35 @@ def variants_questions_kb(question_data:dict) -> list[list[dict]]:
         kb.add(CallbackButton(text=current_variant, payload=f'user_answer::{current_variant + "_correct" if  current_variant == correct_answer else current_variant}'))
 
     return kb.to_list()
+
+
+def change_status_kb():
+    kb = KeyboardBuilder()
+    kb.row(CallbackButton(text="👨‍💻 Новый сотрудник", payload="new_employer"))
+    kb.row(CallbackButton(text="📈 Повышение квалификации", payload="upper_qualification"))
+    
+    return kb.to_list()
+
+
+def change_department_kb(courses_name: list[str]):
+    change_dp_kb = KeyboardBuilder()
+ 
+    change_dp_kb.row(CallbackButton(text="👨‍💻 Отдел продаж", payload="change_department::manager"))
+    change_dp_kb.row(CallbackButton(text="📐 Конструкторский отдел", payload="change_department::in_process"))
+    change_dp_kb.row(CallbackButton(text="🔧 Производственно-технический отдел", payload="change_department::in_process"))
+    change_dp_kb.row(CallbackButton(text="🧾 Бухгалтерский отдел", payload="change_department::in_process"))
+    change_dp_kb.row(CallbackButton(text="⚖️ Юридический отдел", payload="change_department::lawyer"))
+    change_dp_kb.row(CallbackButton(text="👥 Кадровый отдел", payload="change_department::in_process"))
+    change_dp_kb.row(CallbackButton(text="🛠️ Отдел сервиса", payload="change_department::in_process"))
+    change_dp_kb.row(CallbackButton(text="🏭 Производство", payload="change_department::in_process"))
+    
+    return change_dp_kb.to_list()
+
+
+def change_another_department_kb():
+    kb = KeyboardBuilder()
+    kb.row(CallbackButton(text="🏠 Выбрать другой отдел ", payload="another_department"))
+    kb.row(CallbackButton(text="🔍Изучить продукт", payload="another_employer"))
+    
+    return kb.to_list()
+

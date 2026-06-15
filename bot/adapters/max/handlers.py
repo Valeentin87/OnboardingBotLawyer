@@ -23,8 +23,8 @@ from bot.adapters.max.data_utils import format_progress_attempts, get_max_accura
 from bot.adapters.max.test_utils import get_block_2_test_1_quests, get_block_2_test_2_quests, get_block_2_test_3_quests, get_block_3_test_1_quests, get_block_3_test_2_quests, get_block_3_test_3_quests, get_block_3_test_4_quests, get_block_3_test_5_quests, get_block_3_test_6_quests, get_block_4_test_1_quests, get_block_4_test_2_quests, get_block_4_test_3_quests, get_block_4_test_4_quests, get_final_test_block_1, get_final_test_block_2, get_final_test_block_3, get_final_test_block_4, get_final_test_block_5, get_final_test_block_6, get_final_test_block_7, get_testing_data_1, get_testing_data_2, get_testing_data_3, get_testing_data_4, get_testing_data_5, get_testing_data_6
 from bot.adapters.max.utils_FSM import AnotherEmployerStates, OnboardingStates, TrainingStates, UserInfo
 from bot.core.onboarding_flow import flow_about_company, flow_another_emp_training_intro, flow_sales_training_intro, flow_start, flow_start_change_kb
-from core.content import get_another_emp_intro_text, get_block1_intro_text, get_block1_section1_intro_text, get_block1_section2_intro_text, get_block1_section_3_intro_text, get_block1_section_4_intro_text, get_block1_section_5_intro_text, get_block1_section_6_intro_text, get_block2_intro_text, get_block2_section1_intro_text, get_block2_section_2_intro_text, get_block2_section_3_intro_text, get_block2_section_4_intro_text, get_block3_intro_text, get_block3_section_1_intro_text, get_block3_section_2_intro_text, get_block3_section_3_intro_text, get_block3_section_4_intro_text, get_block3_section_5_intro_text, get_block3_section_6_intro_text, get_block4_intro_text, get_block4_section_1_intro_text, get_block4_section_2_intro_text, get_block4_section_3_intro_text, get_block4_section_4_intro_text, get_block5_intro_text, get_block5_intro_video1, get_block5_intro_video10, get_block5_intro_video11, get_block5_intro_video12, get_block5_intro_video13, get_block5_intro_video14, get_block5_intro_video15, get_block5_intro_video2, get_block5_intro_video3, get_block5_intro_video4, get_block5_intro_video5, get_block5_intro_video6, get_block5_intro_video7, get_block5_intro_video8, get_block5_intro_video9, get_block6_intro_text, get_block6_section_1_intro_text, get_block7_intro_text, get_change_course_text, get_course_intro_text, get_final_another_emp_text, get_final_intro_text, get_first_day_congrats_text, get_first_mess_another_empl, get_reminder_text, get_start_text, get_text_start_final_test_block_1, get_text_start_final_test_block_2, get_text_start_final_test_block_3, get_text_start_final_test_block_4, get_text_start_final_test_block_5, get_text_start_final_test_block_6, get_text_to_final_test_block_1, get_text_to_final_test_block_2, get_text_to_final_test_block_3, get_text_to_final_test_block_4, get_text_to_final_test_block_5, get_text_to_final_test_block_6, get_text_to_final_test_block_7, get_tomorrow_reminder_text, get_training_step_3_text, go_to_test_1_text
-from bot.adapters.max.keyboards import change_course_kb, change_course_to_export_stat_kb, continue_studying_kb, education_kb, final_start_test_kb, final_test_kb, finish_studying_kb, main_menu_keyboard, main_one_kb, next_to_educ_to_part_kb, next_to_education_kb, start_test_kb, test_abcd_keyboard, variants_questions_kb, yes_no_kb
+from core.content import get_another_emp_intro_text, get_block1_intro_text, get_block1_section1_intro_text, get_block1_section2_intro_text, get_block1_section_3_intro_text, get_block1_section_4_intro_text, get_block1_section_5_intro_text, get_block1_section_6_intro_text, get_block2_intro_text, get_block2_section1_intro_text, get_block2_section_2_intro_text, get_block2_section_3_intro_text, get_block2_section_4_intro_text, get_block3_intro_text, get_block3_section_1_intro_text, get_block3_section_2_intro_text, get_block3_section_3_intro_text, get_block3_section_4_intro_text, get_block3_section_5_intro_text, get_block3_section_6_intro_text, get_block4_intro_text, get_block4_section_1_intro_text, get_block4_section_2_intro_text, get_block4_section_3_intro_text, get_block4_section_4_intro_text, get_block5_intro_text, get_block5_intro_video1, get_block5_intro_video10, get_block5_intro_video11, get_block5_intro_video12, get_block5_intro_video13, get_block5_intro_video14, get_block5_intro_video15, get_block5_intro_video2, get_block5_intro_video3, get_block5_intro_video4, get_block5_intro_video5, get_block5_intro_video6, get_block5_intro_video7, get_block5_intro_video8, get_block5_intro_video9, get_block6_intro_text, get_block6_section_1_intro_text, get_block7_intro_text, get_change_course_text, get_course_intro_text, get_final_another_emp_text, get_final_intro_text, get_first_day_congrats_text, get_first_mess_another_empl, get_reminder_text, get_start_text, get_text_change_department, get_text_change_status, get_text_in_process, get_text_start_final_test_block_1, get_text_start_final_test_block_2, get_text_start_final_test_block_3, get_text_start_final_test_block_4, get_text_start_final_test_block_5, get_text_start_final_test_block_6, get_text_to_final_test_block_1, get_text_to_final_test_block_2, get_text_to_final_test_block_3, get_text_to_final_test_block_4, get_text_to_final_test_block_5, get_text_to_final_test_block_6, get_text_to_final_test_block_7, get_tomorrow_reminder_text, get_training_step_3_text, go_to_test_1_text
+from bot.adapters.max.keyboards import change_another_department_kb, change_course_kb, change_course_to_export_stat_kb, change_department_kb, change_status_kb, continue_studying_kb, education_kb, final_start_test_kb, final_test_kb, finish_studying_kb, main_menu_keyboard, main_one_kb, next_to_educ_to_part_kb, next_to_education_kb, start_test_kb, test_abcd_keyboard, variants_questions_kb, yes_no_kb
 #from services.claude_api import ClaudeService
 from services.ExelStatisticGenerator import ExcelStatisticGenerator
 from services.gigachat_api import GigaChatService
@@ -91,6 +91,36 @@ async def change_course_name_handl(ctx: Callback, cursor: FSMCursor):
     await ctx.send(text=text, keyboard=change_course_kb(), format='markdown')
 
 
+
+@router.on_command('change_status')
+async def change_status_command_handler(ctx: CommandContext, cursor: FSMCursor):
+    """Обработчик команды change_status"""
+    try:
+        logger.info(f'[INFO][change_status_command_handler] Стартовал change_status_command_handler')
+        text = get_text_change_status()
+        kb = change_status_kb()
+        await ctx.send(text, keyboard = kb)
+    except Exception as e:
+        logger.error(f'Произошла ошибка: {e}')
+
+
+@router.on_button_callback(lambda data: data.payload in ["new_employer", "upper_qualification"])
+async def change_status_handler(ctx: Callback, cursor: FSMCursor):
+    """Обработчик нажатия на кнопку НОВЫЙ СОТРУДНИК или ПОВЫШЕНИЕ КВАЛИФИКАЦИИ"""
+    try:
+        logger.info('Стартовал')
+        status_user = ctx.payload
+        cursor_data = cursor.get_data()
+        cursor_data.update(status_user = status_user)
+        cursor.change_data(cursor_data)
+        logger.info(f'{status_user=}\n{cursor_data=}')
+        text = get_text_change_department()
+        kb = change_department_kb()
+        await ctx.send(text, keyboard = kb)
+    except Exception as e:
+        logger.error(f'Произошла ошибка: {e}')
+                 
+
 @router.on_bot_start()
 @router.on_command('start')
 async def start_command(ctx: CommandContext, cursor: FSMCursor, user_type:str = "manager"):
@@ -146,6 +176,9 @@ async def start_command(ctx: CommandContext, cursor: FSMCursor, user_type:str = 
           
     except Exception as e:
         logger.error(f'[ERROR][start_command] Произошла ошибка {e}')
+
+
+
 
 
 @router.on_message(state(UserInfo.waiting_for_name_surname))
@@ -5459,3 +5492,32 @@ async def high_result_handler(callback: Callback, cursor: FSMCursor):
             
     except Exception as e:
         logger.error(f"[high_result_handler] Произошла ошибка {e}")  
+        
+
+
+@router.on_button_callback(lambda data: data.startswith("change_department::"))
+async def change_department_handler(callback: Callback, cursor: FSMCursor):
+    """Обработчик нажатия на кнопки с названиями курсов обучения"""
+    try:
+        logger.info('Стартовал')
+        cursor_data = cursor.get_data()
+        status_user = cursor_data.get('status_user')
+        logger.info(f'{status_user=}')
+        payload_data = callback.payload
+        department_name = payload_data.split('::')[1]
+        logger.info(f'{department_name=}')
+        if department_name == 'in_process':
+            text = get_text_in_process()
+            kb = change_another_department_kb()
+            await callback.send(text, keyboard = kb)
+            return
+        elif department_name == 'manager':
+            await sales_manager_start_handl(callback, cursor)
+        elif department_name == 'lawyer':
+            logger.info('Ветка ЮРИСТ находится в разработке')
+            await callback.send("Ветка ЮРИСТ находится в разработке")
+            
+        
+    except Exception as e:
+        logger.error(f"[change_department_handler] Произошла ошибка {e}") 
+        
