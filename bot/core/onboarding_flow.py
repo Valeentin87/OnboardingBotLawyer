@@ -20,23 +20,27 @@ from core.content import (
     format_block1_section1_question,
     format_block1_section1_result,
     get_start_text_another_employer,
+    get_text_change_department,
+    get_text_change_status,
 )
 
 #logging.basicConfig(level=logging.INFO)
 
 
-async def flow_start(send, course_name:str):
+async def flow_start(send, course_name:str, status_user:str):
     """
     Стартовый сценарий:
     отправить приветственное сообщение в зависимости от названия курса обучения,
     переданного в аргументе.
     """
     #state_name = cursor.get_state()
+    print(f'{status_user=}')
     if course_name == "Обучение по продажам":
-        text = get_start_text()
+        text = get_start_text(status_user)
     
     elif course_name == "Другой сотрудник":
-        text = get_start_text_another_employer()
+        #text = get_start_text_another_employer()
+        text = get_start_text(status_user)
     
     #if state_name == "another_employer":
     await send(text=text)
@@ -47,7 +51,22 @@ async def flow_start_change_kb(send):
     Стартовый сценарий:
     выбрать курс обучения.
     """
-    text = get_change_course_text()
+    text = get_text_change_status()
+    #text = get_change_course_text()
+    await send(text)
+
+
+    
+async def flow_start_new_empl_change_kb(send, incomplete_flag: bool = False):
+    """
+    Стартовый сценарий:
+    выбрать курс обучения для тех, кто уже есть в JSON.
+    """
+    logger.info("Стартовал")
+    text = get_text_change_department()
+    if incomplete_flag:
+        text = text[9:]
+    #text = get_change_course_text()
     await send(text)
 
 

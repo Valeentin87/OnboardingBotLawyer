@@ -22,7 +22,7 @@ from aiomax import bot
 from bot.adapters.max.data_utils import format_progress_attempts, get_max_accuracy_item, load_user_data, save_reminder, save_user_data, validate_name_surname
 from bot.adapters.max.test_utils import get_block_2_test_1_quests, get_block_2_test_2_quests, get_block_2_test_3_quests, get_block_3_test_1_quests, get_block_3_test_2_quests, get_block_3_test_3_quests, get_block_3_test_4_quests, get_block_3_test_5_quests, get_block_3_test_6_quests, get_block_4_test_1_quests, get_block_4_test_2_quests, get_block_4_test_3_quests, get_block_4_test_4_quests, get_final_test_block_1, get_final_test_block_2, get_final_test_block_3, get_final_test_block_4, get_final_test_block_5, get_final_test_block_6, get_final_test_block_7, get_testing_data_1, get_testing_data_2, get_testing_data_3, get_testing_data_4, get_testing_data_5, get_testing_data_6
 from bot.adapters.max.utils_FSM import AnotherEmployerStates, OnboardingStates, TrainingStates, UserInfo
-from bot.core.onboarding_flow import flow_about_company, flow_another_emp_training_intro, flow_sales_training_intro, flow_start, flow_start_change_kb
+from bot.core.onboarding_flow import flow_about_company, flow_another_emp_training_intro, flow_sales_training_intro, flow_start, flow_start_change_kb, flow_start_new_empl_change_kb
 from core.content import get_another_emp_intro_text, get_block1_intro_text, get_block1_section1_intro_text, get_block1_section2_intro_text, get_block1_section_3_intro_text, get_block1_section_4_intro_text, get_block1_section_5_intro_text, get_block1_section_6_intro_text, get_block2_intro_text, get_block2_section1_intro_text, get_block2_section_2_intro_text, get_block2_section_3_intro_text, get_block2_section_4_intro_text, get_block3_intro_text, get_block3_section_1_intro_text, get_block3_section_2_intro_text, get_block3_section_3_intro_text, get_block3_section_4_intro_text, get_block3_section_5_intro_text, get_block3_section_6_intro_text, get_block4_intro_text, get_block4_section_1_intro_text, get_block4_section_2_intro_text, get_block4_section_3_intro_text, get_block4_section_4_intro_text, get_block5_intro_text, get_block5_intro_video1, get_block5_intro_video10, get_block5_intro_video11, get_block5_intro_video12, get_block5_intro_video13, get_block5_intro_video14, get_block5_intro_video15, get_block5_intro_video2, get_block5_intro_video3, get_block5_intro_video4, get_block5_intro_video5, get_block5_intro_video6, get_block5_intro_video7, get_block5_intro_video8, get_block5_intro_video9, get_block6_intro_text, get_block6_section_1_intro_text, get_block7_intro_text, get_change_course_text, get_course_intro_text, get_final_another_emp_text, get_final_intro_text, get_first_day_congrats_text, get_first_mess_another_empl, get_reminder_text, get_start_text, get_text_change_department, get_text_change_status, get_text_in_process, get_text_start_final_test_block_1, get_text_start_final_test_block_2, get_text_start_final_test_block_3, get_text_start_final_test_block_4, get_text_start_final_test_block_5, get_text_start_final_test_block_6, get_text_to_final_test_block_1, get_text_to_final_test_block_2, get_text_to_final_test_block_3, get_text_to_final_test_block_4, get_text_to_final_test_block_5, get_text_to_final_test_block_6, get_text_to_final_test_block_7, get_tomorrow_reminder_text, get_training_step_3_text, go_to_test_1_text
 from bot.adapters.max.keyboards import change_another_department_kb, change_course_kb, change_course_to_export_stat_kb, change_department_kb, change_status_kb, continue_studying_kb, education_kb, final_start_test_kb, final_test_kb, finish_studying_kb, main_menu_keyboard, main_one_kb, next_to_educ_to_part_kb, next_to_education_kb, start_test_kb, test_abcd_keyboard, variants_questions_kb, yes_no_kb
 #from services.claude_api import ClaudeService
@@ -55,19 +55,26 @@ def get_current_course(cursor: FSMCursor):
         return "Обучение по продажам"
 
 @router.on_button_callback(lambda data: data.payload == "sales_manager")
-async def sales_manager_start_handl(ctx: Callback, cursor: FSMCursor):
+async def sales_manager_start_handl(ctx: Callback, cursor: FSMCursor, status_user: str = 'new_employer'):
     """Обработчик нажатия пользователем кнопки МЕНЕДЖЕР ПО ПРОДАЖАМ 
     при выборе курса обучения"""
     await ctx.message.delete()
     
     data = cursor.get_data()
-    logger.info(f'{data=}')
-    cursor.change_data({"current_course": "Обучение по продажам"})
-    await start_command(ctx, cursor)
+    logger.info(f'{data=}\n{status_user=}')
+    #status_user = data.get("status_user")
+    if status_user == 'new_employer':
+        cursor.change_data({"current_course": "Обучение по продажам"})
+        await start_command(ctx, cursor, status_user)
+    else:
+        cursor.change_data({"current_course": "Обучение по продажам", "status_user": status_user})
+        await start_command(ctx, cursor, status_user)
+        
+        
     
     
 @router.on_button_callback(lambda data: data.payload == "another_employer")
-async def another_employer_start_handl(ctx: Callback, cursor: FSMCursor):
+async def another_employer_start_handl(ctx: Callback, cursor: FSMCursor, status_user: str = "new_employer"):
     """Обработчик нажатия пользователем кнопки ДРУГОЙ СОТРУДНИК 
     при выборе курса обучения"""
     await ctx.message.delete()
@@ -76,7 +83,7 @@ async def another_employer_start_handl(ctx: Callback, cursor: FSMCursor):
     logger.info(f'{data=}')
     cursor.change_data({"current_course": "Другой сотрудник"})
     cursor.change_state(AnotherEmployerStates.user_type)
-    await start_command(ctx, cursor, user_type = "another_employer")
+    await start_command(ctx, cursor, user_type = "another_employer", status_user = status_user)
     
 
 
@@ -111,6 +118,8 @@ async def change_status_handler(ctx: Callback, cursor: FSMCursor):
         logger.info('Стартовал')
         status_user = ctx.payload
         cursor_data = cursor.get_data()
+        if not cursor_data:
+            cursor_data = {}
         cursor_data.update(status_user = status_user)
         cursor.change_data(cursor_data)
         logger.info(f'{status_user=}\n{cursor_data=}')
@@ -123,10 +132,13 @@ async def change_status_handler(ctx: Callback, cursor: FSMCursor):
 
 @router.on_bot_start()
 @router.on_command('start')
-async def start_command(ctx: CommandContext, cursor: FSMCursor, user_type:str = "manager"):
+async def start_command(ctx: CommandContext, cursor: FSMCursor, user_type:str = "manager", status_user: str = 'new_employer'):
     """Обработчик команды старт"""
     try:
-        logger.info(f'[INFO][start_command] Стартовал')
+        text = get_text_change_status()
+        kb = change_status_kb()
+        
+        logger.info(f'[INFO][start_command] Стартовал {status_user=}')
         user_data = load_user_data()
         user_id = str(ctx.user_id)
         cursor_data = cursor.get_data()
@@ -135,9 +147,8 @@ async def start_command(ctx: CommandContext, cursor: FSMCursor, user_type:str = 
             first_name = user_data[user_id]["first_name"]
             second_name = user_data[user_id]["second_name"]
             logger.info(f'[INFO][start_command] Данные о пользователе уже есть в name_surname.json {user_id=}')
-            if not cursor_data:
-                logger.info(f'Строка 99')
-                await ctx.send(f"Здравствуйте, {first_name} {second_name}!")
+
+            #await ctx.send(f"Здравствуйте, {first_name} {second_name}!")
             
                 
         else:
@@ -148,31 +159,65 @@ async def start_command(ctx: CommandContext, cursor: FSMCursor, user_type:str = 
         
         logger.info(f'[INFO][start_command] Стартовал')
             
+        # async def change_course_send(text: str):
+        #     await ctx.send(text, keyboard=change_course_kb(), format='markdown')
+            
         async def change_course_send(text: str):
-            await ctx.send(text, keyboard=change_course_kb(), format='markdown')
+            await ctx.send(text, keyboard=change_status_kb(), format='markdown')
+            
+        async def change_course_new_empl_send(text: str):
+            await ctx.send(text, keyboard=change_department_kb(), format='markdown')
         
         async def send(text: str, cursor: FSMCursor = cursor):
             state_name = cursor.get_state()
+            cursor_data = cursor.get_data()
+            status_name = cursor_data.get("status_user")
+            logger.info(f'{state_name=} {status_name=}')
             if state_name == "another_employer":
-                await ctx.send(text, keyboard=main_menu_keyboard(educ_button_name = "Обучение по продукту"))
+                await ctx.send(text, keyboard=main_menu_keyboard(educ_button_name = "Обучение по продукту", status_user = status_name))
             else:
-                await ctx.send(text, keyboard=main_menu_keyboard(educ_button_name = "Обучение по продажам"))
+                await ctx.send(text, keyboard=main_menu_keyboard(educ_button_name = "Обучение по продажам", status_user = status_name))
 
+                
         data = cursor.get_data()
         logger.info(f'{data=}')
         if data:
+            current_status_user = data.get("status_user")
+            if not current_status_user:
+                data.setdefault("status_user", status_user)
+                current_status_user = status_user
+            
+            logger.info(f'{current_status_user=}')
+            
+            cursor.change_data(data)
             if "current_course" in data and data.get("current_course") == "Обучение по продажам":
                 course_name = data.get("current_course")
-                await flow_start(send, course_name)
+                logger.info(f'{course_name=}')
+                await flow_start(send, course_name, current_status_user)
                 return
             
             if "current_course" in data and data.get("current_course") == "Другой сотрудник":
                 cursor.change_state(AnotherEmployerStates.user_type)
                 course_name = data.get("current_course")
-                await flow_start(send, course_name)
+                await flow_start(send, course_name, status_user)
                 return
         
-        await flow_start_change_kb(change_course_send)
+            logger.info(f"186 Проверяем наличие {user_id=} в progress.json")
+            if user_id in ['51490094', '175082514', '20759321', '24297191', '228312484', '276950556', '49728997',
+                            '85179182', '108241884', '152163122', '50076911', '219566997']:           
+                await flow_start_new_empl_change_kb(change_course_new_empl_send, True) 
+            else:
+                await flow_start_change_kb(change_course_send) 
+        
+        logger.info(f"193 Проверяем наличие {user_id=} в progress.json")
+        data = {}
+        data.setdefault("status_user", "new_employer")
+        cursor.change_data(data)
+        if user_id in ['51490094', '175082514', '20759321', '24297191', '228312484', '276950556', '49728997',
+                        '85179182', '108241884', '152163122', '50076911', '219566997']:           
+            await flow_start_new_empl_change_kb(change_course_new_empl_send, True) 
+        else:
+            await flow_start_change_kb(change_course_send) 
           
     except Exception as e:
         logger.error(f'[ERROR][start_command] Произошла ошибка {e}')
@@ -5495,12 +5540,13 @@ async def high_result_handler(callback: Callback, cursor: FSMCursor):
         
 
 
-@router.on_button_callback(lambda data: data.startswith("change_department::"))
+@router.on_button_callback(lambda data: data.payload.startswith("change_department::"))
 async def change_department_handler(callback: Callback, cursor: FSMCursor):
     """Обработчик нажатия на кнопки с названиями курсов обучения"""
     try:
         logger.info('Стартовал')
         cursor_data = cursor.get_data()
+        logger.info(f'{cursor_data=}')
         status_user = cursor_data.get('status_user')
         logger.info(f'{status_user=}')
         payload_data = callback.payload
@@ -5512,12 +5558,42 @@ async def change_department_handler(callback: Callback, cursor: FSMCursor):
             await callback.send(text, keyboard = kb)
             return
         elif department_name == 'manager':
-            await sales_manager_start_handl(callback, cursor)
+            #cursor_data.update(state_name = 'manager')
+            #cursor.change_data(cursor_data)
+            cursor.clear_state()
+            #cursor.change_data(cursor_data)
+            new_cursor = cursor.get_data()
+            cursor.change_data(new_cursor)
+            logger.info(f'Курсор после изменения: {cursor.get_state()} \n{new_cursor}')
+            status_user = new_cursor.get('status_user')
+            logger.info(f'{status_user=}')
+            if status_user == 'new_employer':
+                await sales_manager_start_handl(callback, cursor)
+            else:
+                logger.info(f'5567 {status_user=}')
+                cursor.change_data({"current_course": "Обучение по продажам", "status_user": status_user})
+                await start_command(callback, cursor, status_user)
+                #await sales_manager_start_handl(callback, cursor, status_user='upper_qualification')
+            
         elif department_name == 'lawyer':
             logger.info('Ветка ЮРИСТ находится в разработке')
             await callback.send("Ветка ЮРИСТ находится в разработке")
             
         
     except Exception as e:
-        logger.error(f"[change_department_handler] Произошла ошибка {e}") 
+        logger.error(f"[change_department_handler] Произошла ошибка {e}")
+        
+        
+@router.on_button_callback(lambda data: data.payload == 'another_department')
+async def another_department_handler(callback: Callback, cursor: FSMCursor):
+    """Обработчик нажатия на кнопку ВЫБРАТЬ ДРУГОЙ ОТДЕЛ"""
+    try:
+        logger.info('Стартовал')
+        text = get_text_change_department()
+        kb = change_department_kb()
+        await callback.send(text, keyboard = kb)
+    except Exception as e:
+        logger.error(f'Произошла ошибка: {e}')
+        
+         
         

@@ -29,7 +29,7 @@ def change_course_kb():
     return kb.to_list()
 
 
-def main_menu_keyboard(educ_button_name:str = "Обучение по продажам"):
+def main_menu_keyboard(educ_button_name:str = "Обучение по продажам", status_user:str = "new_employer"):
     """
     Главное меню для MAX:
     - О компании
@@ -38,14 +38,16 @@ def main_menu_keyboard(educ_button_name:str = "Обучение по прода�
     - Задать вопрос
     """
     kb = KeyboardBuilder()
-    kb.row(CallbackButton(text="🏢 О компании", payload="about_company"))
+    if status_user == "new_employer":
+        kb.row(CallbackButton(text="🏢 О компании", payload="about_company"))
     kb.row(CallbackButton(text=f"📚 {educ_button_name if educ_button_name != 'Другой сотрудник' else 'Обучение по продукту'}", payload="education"))
     kb.row(
         CallbackButton(text="📊 Мой прогресс", payload="my_progress"),
         CallbackButton(text="🏆 Рейтинг", payload="raiting"),
     )
     kb.row(CallbackButton(text="❓ Задать вопрос", payload="send_question"))
-    kb.row(CallbackButton(text="🔄 Выбрать другой отдел", payload="change_course_name"))
+    #kb.row(CallbackButton(text="🔄 Выбрать другой отдел", payload="change_course_name"))
+    kb.row(CallbackButton(text="🔄 Выбрать другой отдел", payload="another_department"))
     return kb.to_list()
 
 
@@ -175,7 +177,7 @@ def change_status_kb():
     return kb.to_list()
 
 
-def change_department_kb(courses_name: list[str]):
+def change_department_kb():
     change_dp_kb = KeyboardBuilder()
  
     change_dp_kb.row(CallbackButton(text="👨‍💻 Отдел продаж", payload="change_department::manager"))
