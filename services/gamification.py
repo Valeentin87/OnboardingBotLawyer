@@ -663,22 +663,28 @@ class GamificationService:
     def get_full_completed_lessons(self, course_name: str, user_id: int):
         """Возвращает количество полных уроков, завершенных пользователем
         по курсу обучения, переданному в аргументе"""
-        
-        data = self._load_data()
-        
-        user_data = data.get(str(user_id))
-        if user_data:
-            courses_data = user_data.get("courses")
-            if courses_data:
-                current_course_data = courses_data.get(course_name)
-        
-        lessons_completed = current_course_data.get("lessons_completed") if current_course_data else 0
-        total_lessons = current_course_data.get("lessons_completed") if current_course_data else 0
-        
-        full_completed_lessons = lessons_completed if total_lessons else None
-        logger.info(f'{data=}\n{current_course_data=}\n{full_completed_lessons=}')
-        
-        return full_completed_lessons
+        try:
+            data = self._load_data()
+            
+            user_data = data.get(str(user_id))
+            if user_data:
+                courses_data = user_data.get("courses")
+                if courses_data:
+                    current_course_data = courses_data.get(course_name)
+                else:
+                    current_course_data = {}
+            else:
+                current_course_data = {}
+            
+            lessons_completed = current_course_data.get("lessons_completed") if current_course_data else 0
+            total_lessons = current_course_data.get("lessons_completed") if current_course_data else 0
+            
+            full_completed_lessons = lessons_completed if total_lessons else None
+            logger.info(f'{data=}\n{current_course_data=}\n{full_completed_lessons=}')
+            
+            return full_completed_lessons
+        except Exception as e:
+            logger.error(f'Произошла ошибка: {e}')
         
         
         

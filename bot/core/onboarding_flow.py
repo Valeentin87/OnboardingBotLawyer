@@ -51,7 +51,9 @@ async def flow_start_change_kb(send):
     Стартовый сценарий:
     выбрать курс обучения.
     """
+    logger.info('Стартовал')
     text = get_text_change_status()
+    logger.info(f'{text=}')
     #text = get_change_course_text()
     await send(text)
 

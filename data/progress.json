@@ -34,15 +34,15 @@
       "username": "Тестовый Пользователь",
       "first_name": "Тестовый",
       "last_name": "Пользователь",
-      "last_activity": "2026-06-06T23:25:17.494411"
+      "last_activity": "2026-06-17T18:33:07.531411"
     },
     "courses": {
       "Обучение по продажам": {
-        "lessons_completed": 0,
+        "lessons_completed": 7,
         "total_lessons": 43,
-        "correct_answers": 0,
-        "total_answers": 0,
-        "accuracy_percent": 0.0
+        "correct_answers": 13,
+        "total_answers": 45,
+        "accuracy_percent": 28.9
       },
       "Другой сотрудник": {
         "lessons_completed": 0,
@@ -53,7 +53,43 @@
       }
     },
     "lesson_results": {
-      "Обучение по продажам": {},
+      "Обучение по продажам": {
+        "section_1": {
+          "correct_count": 3,
+          "total_count": 5,
+          "accuracy": 60.0
+        },
+        "section_2": {
+          "correct_count": 2,
+          "total_count": 5,
+          "accuracy": 40.0
+        },
+        "section_3": {
+          "correct_count": 4,
+          "total_count": 5,
+          "accuracy": 80.0
+        },
+        "section_4": {
+          "correct_count": 0,
+          "total_count": 5,
+          "accuracy": 0.0
+        },
+        "section_5": {
+          "correct_count": 0,
+          "total_count": 5,
+          "accuracy": 0.0
+        },
+        "section_6": {
+          "correct_count": 2,
+          "total_count": 5,
+          "accuracy": 40.0
+        },
+        "final_test": {
+          "correct_count": 2,
+          "total_count": 15,
+          "accuracy": 13.3
+        }
+      },
       "Другой сотрудник": {}
     },
     "completed_attempts": [
@@ -80,6 +116,14 @@
         "accuracy_percent": 26.8,
         "lessons_completed": 43,
         "course_name": "Обучение по продажам"
+      },
+      {
+        "date_completed": "2026-06-17T18:33:07.535586",
+        "correct_answers": 13,
+        "total_answers": 45,
+        "accuracy_percent": 28.9,
+        "lessons_completed": 43,
+        "course_name": "Другой сотрудник"
       }
     ]
   },

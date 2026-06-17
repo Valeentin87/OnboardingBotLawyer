@@ -81,7 +81,10 @@ async def another_employer_start_handl(ctx: Callback, cursor: FSMCursor, status_
     
     data = cursor.get_data()
     logger.info(f'{data=}')
-    cursor.change_data({"current_course": "Другой сотрудник"})
+    if not data:
+        data = {}
+    data.update(current_course="Другой сотрудник")
+    cursor.change_data(data)
     cursor.change_state(AnotherEmployerStates.user_type)
     await start_command(ctx, cursor, user_type = "another_employer", status_user = status_user)
     
@@ -116,6 +119,7 @@ async def change_status_handler(ctx: Callback, cursor: FSMCursor):
     """Обработчик нажатия на кнопку НОВЫЙ СОТРУДНИК или ПОВЫШЕНИЕ КВАЛИФИКАЦИИ"""
     try:
         logger.info('Стартовал')
+        await ctx.message.delete()
         status_user = ctx.payload
         cursor_data = cursor.get_data()
         if not cursor_data:
@@ -254,7 +258,7 @@ async def process_name_surname(message: Message, cursor: FSMCursor):
         cursor.clear_state()
         
         async def change_course_send(text: str):
-            await message.send(text, keyboard=change_course_kb(), format="html")
+            await message.send(text, keyboard=change_status_kb(), format="html")
         
         # async def send(text: str):
         #     await message.send(text, keyboard=main_menu_keyboard())
@@ -769,11 +773,14 @@ async def go_to_main_menu_handler(callback: Callback, cursor: FSMCursor):
     """Обработчик нажатия кнопки перехода в Главное меню"""
     try:
         current_course = get_current_course(cursor)
+        cursor_data = cursor.get_data()
+        status_user = cursor_data.get("status_user")
+        logger.info(f'{status_user=}')
         logger.info(f'{current_course=}')
         cursor.clear()
-        cursor.change_data({"current_course": current_course})
+        cursor.change_data({"current_course": current_course, "status_user": status_user})
         
-        await callback.send("Вернулись в главное меню, выберите одно из действий 👇", keyboard=main_menu_keyboard(current_course))
+        await callback.send("Вернулись в главное меню, выберите одно из действий 👇", keyboard=main_menu_keyboard(current_course, status_user))
     except Exception as e:
         logger.error(f'[go_to_main_menu_handler] произошла ошибка {e}')    
 
@@ -5295,6 +5302,11 @@ async def another_employer_training_handler(callback: Callback, cursor: FSMCurso
         game = GamificationService(current_course)
         user_id = callback.user_id
         
+        cursor_data = cursor.get_data()
+        status_user = cursor_data.get('status_user')
+        logger.info(f'{status_user=}')
+
+        
         current_course = get_current_course(cursor)
         logger.info(f'{current_course=}')
                
@@ -5303,6 +5315,9 @@ async def another_employer_training_handler(callback: Callback, cursor: FSMCurso
         #lessons_completed = None
         
         if not lessons_completed:
+            if status_user == 'upper_qualification':
+                await show_course_intro_handler(callback, cursor)
+                return
             await flow_another_emp_training_intro(
                 lambda text, with_keyboard=None: send(callback, text, with_keyboard)
                 )
@@ -5326,6 +5341,11 @@ async def flow_sales_training_handler(callback: Callback, cursor: FSMCursor):
         logger.info(f'{current_course=}')
         game = GamificationService(current_course)
         user_id = callback.user_id
+        
+        cursor_data = cursor.get_data()
+        status_user = cursor_data.get('status_user')
+        logger.info(f'{status_user=}')
+
                        
         lessons_completed = game.get_lessons_completed(user_id) if current_course != "Другой сотрудник" else game.get_lessons_completed(user_id, "Другой сотрудник")
         
@@ -5339,10 +5359,16 @@ async def flow_sales_training_handler(callback: Callback, cursor: FSMCursor):
                 
         if not lessons_completed:
             if current_course == 'Обучение по продажам':
+                if status_user == 'upper_qualification':
+                    await show_course_intro_handler(callback, cursor)
+                    return
                 await flow_sales_training_intro(
                     lambda text, with_keyboard=None: send(callback, text, with_keyboard)
                     )
             elif current_course == 'Другой сотрудник':
+                if status_user == 'upper_qualification':
+                    await show_course_intro_handler(callback, cursor)
+                    return
                 await flow_another_emp_training_intro(
                     lambda text, with_keyboard=None: send(callback, text, with_keyboard)
                     )
@@ -5545,6 +5571,7 @@ async def change_department_handler(callback: Callback, cursor: FSMCursor):
     """Обработчик нажатия на кнопки с названиями курсов обучения"""
     try:
         logger.info('Стартовал')
+        await callback.message.delete()
         cursor_data = cursor.get_data()
         logger.info(f'{cursor_data=}')
         status_user = cursor_data.get('status_user')
@@ -5588,6 +5615,7 @@ async def change_department_handler(callback: Callback, cursor: FSMCursor):
 async def another_department_handler(callback: Callback, cursor: FSMCursor):
     """Обработчик нажатия на кнопку ВЫБРАТЬ ДРУГОЙ ОТДЕЛ"""
     try:
+        await callback.message.delete()
         logger.info('Стартовал')
         text = get_text_change_department()
         kb = change_department_kb()

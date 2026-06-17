@@ -303,13 +303,14 @@ class RAGService:
     """RAG для AI-чата - отвечает на основе базы знаний"""
     
     
-    def __init__(self):
+    def __init__(self, branch_name: str = 'sales_training'):
         try:
             logger.info(f'[INFO][RAGService][__init__] Создаем экземпляр класса RAGService')
             config = load_config()
             # Определяем абсолютный путь от корня проекта
             base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            self.kb_path = os.path.join(base_dir, 'materials', 'knowledge_base')
+            self.branch_name = branch_name
+            self.kb_path = os.path.join(base_dir, 'materials', 'knowledge_base', branch_name)
             
             # Создаём папку если её нет
             os.makedirs(self.kb_path, exist_ok=True)
@@ -415,14 +416,21 @@ class RAGService:
         try:
             logger.info(f'[INFO][RAGService][_load_all_blocks] Стартовал')
             blocks = {}
-            for filename in BLOCKS_MAP.keys():
+            
+            block_map_main = {}
+            if self.branch_name == 'sales_training':
+                block_map_main = BLOCKS_MAP.copy()
+            elif self.branch_name == 'lawyer':
+                block_map_main = BLOCKS_MAP_LAWYER.copy()
+            
+            for filename in block_map_main.keys():
                 filepath = os.path.join(self.kb_path, filename)
                 if not os.path.exists(filepath):
                     print(f"⚠️ Файл не найден: {filepath}")
                     continue
                 content = self._load_docx(filepath)
                 if content and '[Ошибка' not in content:
-                    section_name = BLOCKS_MAP[filename]['name'].upper()
+                    section_name = block_map_main[filename]['name'].upper()
                     blocks[filename] = f"=== {section_name} ===\n{content}"
                     print(f"✅ Загружен: {filename} ({len(content)} символов)")
                     logger.info(f'✅ Загружен: {filename} ({len(content)} символов)')
@@ -471,13 +479,20 @@ class RAGService:
         """
         try:
             logger.info(f'[INFO][RAGService][_route_question] Стартовал')
+            
+            block_map_main = {}
+            if self.branch_name == 'sales_training':
+                block_map_main = BLOCKS_MAP.copy()
+            elif self.branch_name == 'lawyer':
+                block_map_main = BLOCKS_MAP_LAWYER.copy()
+            
             question_lower = question.lower()
             # Разбиваем вопрос на отдельные слова для нечёткого поиска
             question_words = re.findall(r'[\w\u0400-\u04ff]+', question_lower)
 
             scores = {}  # {filename: score}
 
-            for filename, meta in BLOCKS_MAP.items():
+            for filename, meta in block_map_main.items():
                 if filename not in self.blocks:
                     continue
 
@@ -513,7 +528,7 @@ class RAGService:
 
             # Возвращаем ВСЕ блоки с ненулевым score, сортируем по убыванию
             matched = sorted(scores.keys(), key=lambda f: scores[f], reverse=True)
-            names = ', '.join(BLOCKS_MAP[f]['name'] for f in matched)
+            names = ', '.join(block_map_main[f]['name'] for f in matched)
             logger.info(f"[INFO][RAGService][_route_question] Маршрут: '{question[:60]}' → [{names}] (scores: {scores})")
             print(f"🎯 Маршрут: '{question[:60]}' → [{names}] (scores: {scores})")
             return matched
@@ -532,6 +547,13 @@ class RAGService:
         """
         try:
             logger.info(f'[INFO][RAGService][answer_question] Стартовал')
+            
+            block_map_main = {}
+            if self.branch_name == 'sales_training':
+                block_map_main = BLOCKS_MAP.copy()
+            elif self.branch_name == 'lawyer':
+                block_map_main = BLOCKS_MAP_LAWYER.copy()
+            
             if not self.blocks:
                 return "❌ База знаний пока не загружена."
 
@@ -542,7 +564,7 @@ class RAGService:
                 combined_text = '\n\n'.join(
                     self.blocks[f] for f in target_blocks if f in self.blocks
                 )
-                block_names = ', '.join(BLOCKS_MAP[f]['name'] for f in target_blocks)
+                block_names = ', '.join(block_map_main[f]['name'] for f in target_blocks)
                 token_est = len(combined_text) // 4
                 print(f"📖 Читаю блок(и): {block_names} (~{token_est} токенов)")
 
@@ -593,31 +615,59 @@ class RAGService:
             return False
 
     def get_stats(self) -> dict:
-        return {
-            'total_size': len(self.knowledge_base),
-            'is_loaded': bool(self.blocks),
-            'blocks_loaded': list(self.blocks.keys()),
-            'has_block1': 'block_1_product.docx' in self.blocks,
-            'has_block2': 'block_2_client.docx' in self.blocks,
-            'has_block3': 'block_3_sales_technology.docx' in self.blocks,
-            'has_block4': 'block_4_glass.docx' in self.blocks,
-            'has_block5': 'block_5_b24.docx' in self.blocks,
-            'has_block6': 'block_6_pbi.docx' in self.blocks,
-        }
+        
+        if self.branch_name == 'sales_training':
+        
+            return {
+                'total_size': len(self.knowledge_base),
+                'is_loaded': bool(self.blocks),
+                'blocks_loaded': list(self.blocks.keys()),
+                'has_block1': 'block_1_product.docx' in self.blocks,
+                'has_block2': 'block_2_client.docx' in self.blocks,
+                'has_block3': 'block_3_sales_technology.docx' in self.blocks,
+                'has_block4': 'block_4_glass.docx' in self.blocks,
+                'has_block5': 'block_5_b24.docx' in self.blocks,
+                'has_block6': 'block_6_pbi.docx' in self.blocks,
+            }
+            
+        elif self.branch_name == 'lawyer':
+            
+            return {
+                'total_size': len(self.knowledge_base),
+                'is_loaded': bool(self.blocks),
+                'blocks_loaded': list(self.blocks.keys()),
+                'has_block1': 'jurist_block_1.docx' in self.blocks,
+                'has_block2': 'jurist_block_2.docx' in self.blocks,
+                'has_block3': 'jurist_block_3.docx' in self.blocks,
+                'has_block4': 'jurist_block_4.docx' in self.blocks,
+                'has_block5': 'jurist_block_5.docx' in self.blocks,
+            }
+            
     
     
     # ✅ ИЗМЕНЕНО: загружает все файлы из списка и объединяет в одну базу знаний
     def _load_knowledge(self) -> str:
         """Загружает базу знаний из нескольких .docx файлов ПОЛНОСТЬЮ"""
 
-        filenames = [
-            'block_1_product.docx',
-            'block_2_client.docx',
-            'block_3_sales_technology.docx',
-            'block_4_glass.docx',
-            'block_5_b24.docx',
-            'block_6_pbi.docx'
-        ]
+        if self.branch_name == 'sales_training':
+            filenames = [
+                'block_1_product.docx',
+                'block_2_client.docx',
+                'block_3_sales_technology.docx',
+                'block_4_glass.docx',
+                'block_5_b24.docx',
+                'block_6_pbi.docx'
+            ]
+            
+        elif self.branch_name == 'lawyer':
+            filenames = [
+                'jurist_block_1.docx',
+                'jurist_block_2.docx',
+                'jurist_block_3.docx',
+                'jurist_block_4.docx',
+                'jurist_block_5.docx'
+            ]
+            
 
         sections = []
 
