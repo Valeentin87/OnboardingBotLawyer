@@ -44,7 +44,8 @@ async def send_commands():
         BotCommand('my_progress', 'Мой прогресс'),
         BotCommand('rating', 'Рейтинг'),
         BotCommand('export_stats', 'Статистика'),
-        BotCommand('home', 'Главное меню')
+        BotCommand('home', 'Главное меню'),
+        BotCommand('change_status', 'Сменить статус')
     ])
 
 if __name__ == "__main__":

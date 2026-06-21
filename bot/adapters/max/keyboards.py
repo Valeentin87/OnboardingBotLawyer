@@ -38,6 +38,9 @@ def main_menu_keyboard(educ_button_name:str = "Обучение по прода�
     - Задать вопрос
     """
     kb = KeyboardBuilder()
+    
+    # if educ_button_name == 'Другой сотрудник':
+    #     educ_button_name = 'Обучение по продукту'
     if status_user == "new_employer":
         kb.row(CallbackButton(text="🏢 О компании", payload="about_company"))
     kb.row(CallbackButton(text=f"📚 {educ_button_name if educ_button_name != 'Другой сотрудник' else 'Обучение по продукту'}", payload="education"))
@@ -95,8 +98,14 @@ def change_course_to_export_stat_kb(courses_name: list[str]):
 
 def education_kb(final_flag:bool = False, with_out_ai_flag:bool = False, current_cource: str = "Обучение по продажам"):
     educ_kb = KeyboardBuilder()
+    payload_data = 'education'
+    if current_cource == 'Обучение по продукту':
+        payload_data = 'another_emp'
+    elif current_cource == 'Обучение для юриста':
+        payload_data = 'lawyer_educ'
+    
     if not final_flag:
-        educ_kb.row(CallbackButton(text=f"💼 {current_cource}", payload="education" if current_cource != "Обучение по продукту" else "another_emp"))
+        educ_kb.row(CallbackButton(text=f"💼 {current_cource}", payload=payload_data))
     if not with_out_ai_flag:
         educ_kb.row(CallbackButton(text="🏠 Главное меню", payload="main_menu"))
     else:

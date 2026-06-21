@@ -7,7 +7,12 @@ class UserInfo:
 class AnotherEmployerStates:
     """Состояния для ветки ДРУГОЙ СОТРУДНИК"""
     user_type = "another_employer"
+    
 
+class LawyerStates:
+    """Состояния для ветки ЮРИСТ"""
+    user_type = "lawyer"
+    
 
 class OnboardingStates:
     """Состояния конечных атвоматов для подготовки к обучению"""
@@ -127,3 +132,10 @@ class TrainingStates:
     block_7_final_testing = 'block_7_final_testing'
     
     asking_ai = 'asking_ai'
+    
+    # =========== ОБУЧЕНИЕ ДЛЯ ЮРИСТА =============
+    lawyer = {
+        'block_1': 'block_1',
+        'block_1_ready_for_test': 'block_1_ready_for_test',
+        'block1_questions': 'block1_questions_lawyer'  # аналог step12_testing
+    }

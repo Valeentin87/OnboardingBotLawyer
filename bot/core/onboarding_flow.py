@@ -9,6 +9,7 @@ from core.content import (
     get_change_course_text,
     get_change_date_text,
     get_first_mess_another_empl,
+    get_first_mess_lawyer,
     get_start_text,
     get_about_company_text,
     get_sales_training_intro_text,
@@ -40,6 +41,9 @@ async def flow_start(send, course_name:str, status_user:str):
     
     elif course_name == "Другой сотрудник":
         #text = get_start_text_another_employer()
+        text = get_start_text(status_user)
+        
+    if course_name == "Обучение для юриста":
         text = get_start_text(status_user)
     
     #if state_name == "another_employer":
@@ -109,6 +113,7 @@ async def flow_sales_training_intro(send, user_name: str = "коллега"):
         logger.error(f"[flow_sales_training_intro] произошла ошибка {e}")
 
 
+
 async def flow_another_emp_training_intro(send, user_name: str = "коллега"):
     """
     Сценарий '💼 Обучение по продукту' (ШАГ 1 + инфо).
@@ -129,6 +134,28 @@ async def flow_another_emp_training_intro(send, user_name: str = "коллега
         await send(info, with_keyboard=next_kb)
     except Exception as e:
         logger.error(f"[flow_another_emp_training_intro] произошла ошибка {e}")
+        
+
+async def flow_lawyer_training_intro(send, user_name: str = "коллега"):
+    """
+    Сценарий '💼 Обучение для юриста' (ШАГ 1 + инфо).
+    """
+    try:
+        logger.info("[flow_lawyer_training_intro] стартовал")
+        intro = get_first_mess_lawyer()
+        #intro = get_sales_training_intro_text(user_name)
+        #info = get_change_date_text()
+        info = get_sales_training_info_text()
+        logger.info(f"{intro=}\n{info=}")
+        logger.info("Пытаюсь отправить intro")
+        await send(intro, with_keyboard="clear")
+        await asyncio.sleep(10)  # 30 секунд 
+        # Паузы, задержки и т.п. — в адаптере (MAX), чтобы не блокировать CORE.
+        next_kb = next_to_education_kb
+        logger.info("Пытаюсь отправить info")
+        await send(info, with_keyboard=next_kb)
+    except Exception as e:
+        logger.error(f"[flow_lawyer_training_intro] произошла ошибка {e}")
     
 
 # async def flow_course_intro(send):

@@ -11,7 +11,8 @@ class GamificationService:
         self.progress_file = 'data/progress.json'
         self.total_lessons_info = {
             "Обучение по продажам": 43,
-            "Другой сотрудник": 7
+            "Другой сотрудник": 7,
+            "Обучение для юриста": 12
         }
         self.current_course = current_course
         os.makedirs('data', exist_ok=True)
@@ -543,12 +544,20 @@ class GamificationService:
             accuracy_percent = round(accuracy, 1)
 
         # Создаём запись о попытке
+        lessons_completed = 43
+        if course_name == 'Другой сотрудник':
+            lessons_completed = 7
+        elif course_name == 'Обучение для юриста':
+            lessons_completed = 12
+        else:
+            logger.warning("Кажется не корректное название курса обучения, возможно надо поменять на ОБУЧЕНИЕ ПО ПРОДУКТУ")
+            
         attempt_record = {
             'date_completed': datetime.now().isoformat(),
             'correct_answers': correct_answers,
             'total_answers': total_answers,
             'accuracy_percent': accuracy_percent,
-            'lessons_completed': 43,
+            'lessons_completed': lessons_completed,
             'course_name': course_name            
         }
 
@@ -664,11 +673,14 @@ class GamificationService:
         """Возвращает количество полных уроков, завершенных пользователем
         по курсу обучения, переданному в аргументе"""
         try:
+            logger.info(f'{course_name=}')
             data = self._load_data()
             
             user_data = data.get(str(user_id))
+            logger.info(f'{user_data=}')
             if user_data:
                 courses_data = user_data.get("courses")
+                logger.info(f'{courses_data=}')
                 if courses_data:
                     current_course_data = courses_data.get(course_name)
                 else:
@@ -710,7 +722,13 @@ class GamificationService:
         # Загружаем все данные
         data = self._load_data()
         user_key = str(user_id)
-        total_lessons = 43 if course_name == "Обучение по продажам" else 7
+        total_lessons = 43 
+        if course_name == "Другой сотрудник":
+            total_lessons = 7
+        elif course_name == "Обучение для юриста":
+            total_lessons = 12
+        else:
+            logger.warning("Кажется не корректное название курса обучения, возможно надо поменять на ОБУЧЕНИЕ ПО ПРОДУКТУ")
 
         # Проверяем, существует ли пользователь в данных
         if user_key not in data:

@@ -1,0 +1,51 @@
+list index out of range
+Traceback (most recent call last):
+  File "/home/valeentin87/education/TgBot/work_projects/FPSProject/onboarding_bot_lawyer/venv/lib/python3.12/site-packages/aiomax/bot.py", line 1036, in start_polling
+    await self.handle_update(update)
+  File "/home/valeentin87/education/TgBot/work_projects/FPSProject/onboarding_bot_lawyer/venv/lib/python3.12/site-packages/aiomax/bot.py", line 982, in handle_update
+    filters = [filter(callback) for filter in handler.filters]
+               ^^^^^^^^^^^^^^^^
+  File "/home/valeentin87/education/TgBot/work_projects/FPSProject/onboarding_bot_lawyer/venv/lib/python3.12/site-packages/aiomax/router.py", line 73, in combined_filter
+    return all(f(message) for f in normalized_filters)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/valeentin87/education/TgBot/work_projects/FPSProject/onboarding_bot_lawyer/venv/lib/python3.12/site-packages/aiomax/router.py", line 73, in <genexpr>
+    return all(f(message) for f in normalized_filters)
+               ^^^^^^^^^^
+  File "/home/valeentin87/education/TgBot/work_projects/FPSProject/onboarding_bot_lawyer/bot/adapters/max/handlers.py", line 1160, in <lambda>
+    @router.on_button_callback(state(TrainingStates.step_3_presentation), lambda data: data.payload.split('::')[1] == "not_first")
+                                                                                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+list index out of range
+Traceback (most recent call last):
+  File "/home/valeentin87/education/TgBot/work_projects/FPSProject/onboarding_bot_lawyer/venv/lib/python3.12/site-packages/aiomax/bot.py", line 1036, in start_polling
+    await self.handle_update(update)
+  File "/home/valeentin87/education/TgBot/work_projects/FPSProject/onboarding_bot_lawyer/venv/lib/python3.12/site-packages/aiomax/bot.py", line 982, in handle_update
+    filters = [filter(callback) for filter in handler.filters]
+               ^^^^^^^^^^^^^^^^
+  File "/home/valeentin87/education/TgBot/work_projects/FPSProject/onboarding_bot_lawyer/venv/lib/python3.12/site-packages/aiomax/router.py", line 73, in combined_filter
+    return all(f(message) for f in normalized_filters)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/valeentin87/education/TgBot/work_projects/FPSProject/onboarding_bot_lawyer/venv/lib/python3.12/site-packages/aiomax/router.py", line 73, in <genexpr>
+    return all(f(message) for f in normalized_filters)
+               ^^^^^^^^^^
+  File "/home/valeentin87/education/TgBot/work_projects/FPSProject/onboarding_bot_lawyer/bot/adapters/max/handlers.py", line 1160, in <lambda>
+    @router.on_button_callback(state(TrainingStates.step_3_presentation), lambda data: data.payload.split('::')[1] == "not_first")
+                                                                                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+list index out of range
+Traceback (most recent call last):
+  File "/home/valeentin87/education/TgBot/work_projects/FPSProject/onboarding_bot_lawyer/venv/lib/python3.12/site-packages/aiomax/bot.py", line 1036, in start_polling
+    await self.handle_update(update)
+  File "/home/valeentin87/education/TgBot/work_projects/FPSProject/onboarding_bot_lawyer/venv/lib/python3.12/site-packages/aiomax/bot.py", line 982, in handle_update
+    filters = [filter(callback) for filter in handler.filters]
+               ^^^^^^^^^^^^^^^^
+  File "/home/valeentin87/education/TgBot/work_projects/FPSProject/onboarding_bot_lawyer/venv/lib/python3.12/site-packages/aiomax/router.py", line 73, in combined_filter
+    return all(f(message) for f in normalized_filters)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/valeentin87/education/TgBot/work_projects/FPSProject/onboarding_bot_lawyer/venv/lib/python3.12/site-packages/aiomax/router.py", line 73, in <genexpr>
+    return all(f(message) for f in normalized_filters)
+               ^^^^^^^^^^
+  File "/home/valeentin87/education/TgBot/work_projects/FPSProject/onboarding_bot_lawyer/bot/adapters/max/handlers.py", line 1160, in <lambda>
+    @router.on_button_callback(state(TrainingStates.step_3_presentation), lambda data: data.payload.split('::')[1] == "not_first")
+                                                                                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
