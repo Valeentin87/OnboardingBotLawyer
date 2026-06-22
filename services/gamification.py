@@ -186,7 +186,7 @@ class GamificationService:
             }
         
         course_progress = data[user_key]['courses'][course_name]
-        logger.info(f'[INFO][GamificationService][update_lesson_progress] {course_progress=}')
+        logger.info(f'[INFO][GamificationService][update_lesson_progress] {course_progress=}\n{lesson_id=}')
         
         # Проверяем, был ли урок уже пройден
         info_dict = data[user_key]['lesson_results']
@@ -221,6 +221,24 @@ class GamificationService:
             course_progress['accuracy_percent'] = 0.0
         
         # Сохраняем результат урока
+        if course_name == "Обучение для юриста":
+            logger.info(f"Проверяем наличие блоков section в переменной data[user_key]['lesson_results'][course_name]")
+            checking_data = data[user_key]['lesson_results'][course_name]
+            all_keys_in_checking_data = list(checking_data.keys())
+            logger.info(f'{all_keys_in_checking_data=}')
+            all_section_keys = (key for key in all_keys_in_checking_data if key.startswith('section')), None
+            logger.info(f'{all_section_keys=}')
+            if all_keys_in_checking_data:
+                logger.info("Отдельные блоки ветки ЮРИСТ уже пройдены, проверим номер последнего блока")
+                last_section_name = list(all_section_keys)[-1]
+                last_section_number = int(last_section_name[-1])
+                logger.info(f"Номер последнего блока, пройденного в ветке ЮРИСТ: {last_section_number=}")
+                if last_section_number < 5:
+                    lesson_id = f'section_{last_section_number + 1}'
+            else:
+                lesson_id = 'section_1'
+            
+            
         data[user_key]['lesson_results'][course_name][lesson_id] = {
             'correct_count': correct_count,
             'total_count': total_count,

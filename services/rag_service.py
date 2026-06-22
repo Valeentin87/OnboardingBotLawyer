@@ -143,7 +143,7 @@ BLOCKS_MAP = {
 
 
 BLOCKS_MAP_LAWYER = {
-        'block_1_jurist.docx': {
+        'jurist_block_1.docx': {
         'name': 'Блок 1: Перечень компаний и юридических лиц',
         'keywords': [
             # Названия компаний — ключевой контент блока
@@ -170,7 +170,7 @@ BLOCKS_MAP_LAWYER = {
         ],
     },
 
-    'block_2_jurist.docx': {
+    'jurist_block_2.docx': {
         'name': 'Блок 2: Взаимодействие юриста с отделами',
         'keywords': [
             # Отделы — основная тема блока
@@ -202,7 +202,7 @@ BLOCKS_MAP_LAWYER = {
         ],
     },
 
-    'block_3_jurist.docx': {
+    'jurist_block_3.docx': {
         'name': 'Блок 3: Реестр типов договоров и шаблонов',
         'keywords': [
             # Типы договоров — весь блок об этом
@@ -231,7 +231,7 @@ BLOCKS_MAP_LAWYER = {
         ],
     },
 
-    'block_4_jurist.docx': {
+    'jurist_block_4.docx': {
         'name': 'Блок 4: Цикличные и регулярные юридические мероприятия',
         'keywords': [
             # Периодичность задач — суть блока
@@ -262,7 +262,7 @@ BLOCKS_MAP_LAWYER = {
         ],
     },
 
-    'block_5_jurist.docx': {
+    'jurist_block_5.docx': {
         'name': 'Блок 5: Реестр документов, папок и доступов',
         'keywords': [
             # Типы документов и где лежат — суть блока

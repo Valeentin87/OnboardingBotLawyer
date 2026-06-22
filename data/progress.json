@@ -34,7 +34,7 @@
       "username": "Тестовый Пользователь",
       "first_name": "Тестовый",
       "last_name": "Пользователь",
-      "last_activity": "2026-06-17T18:33:07.531411"
+      "last_activity": "2026-06-22T08:59:00.456594"
     },
     "courses": {
       "Обучение по продажам": {
@@ -123,6 +123,14 @@
         "total_answers": 45,
         "accuracy_percent": 28.9,
         "lessons_completed": 43,
+        "course_name": "Другой сотрудник"
+      },
+      {
+        "date_completed": "2026-06-22T08:59:00.480226",
+        "correct_answers": 8,
+        "total_answers": 15,
+        "accuracy_percent": 53.3,
+        "lessons_completed": 7,
         "course_name": "Другой сотрудник"
       }
     ]

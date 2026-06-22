@@ -1899,9 +1899,11 @@ async def answer_block1_question_handler(message: Message, cursor: FSMCursor):
         state_name = cursor.get_state()
         logger.info(f'{state_name=}')
         
-        rag = RAGService()
         if state_name == 'block1_questions_lawyer':
             rag = RAGService(branch_name = 'lawyer')
+        else:
+            rag = RAGService()
+        
         answer = await rag.answer_question(message.body.text)
         
         await thinking_msg.delete() 
@@ -1914,7 +1916,7 @@ async def answer_block1_question_handler(message: Message, cursor: FSMCursor):
             "➡️ Задайте следующий вопрос или нажмите 📝 **Перейти к тестированию**"
         )
         
-        !!!!await message.send(response_text, keyboard=final_start_test_kb(), format='markdown')
+        await message.send(response_text, keyboard=final_start_test_kb(), format='markdown')
         
         # Остаёмся в состоянии block1_questions для непрерывного диалога
          
@@ -1978,6 +1980,7 @@ async def block1_final_testing_handler(message: Message, cursor: FSMCursor):
 # ============================================================================
 # ШАГ 17: ФИНАЛЬНОЕ ТЕСТИРОВАНИЕ ПО БЛОКУ №1 (10 закрытых + 5 открытых)
 # ============================================================================
+
 
 @router.on_button_callback(state(TrainingStates.step_12_testing), lambda data: data.payload == 'start_final_test')
 async def start_testing_block1_handler(callback: Callback, cursor: FSMCursor):
@@ -5532,14 +5535,23 @@ async def flow_sales_training_handler(callback: Callback, cursor: FSMCursor):
         elif lessons_completed < 43:
             logger.info(f"[next_education_handler] Обучение по блоку № 7 не завершено")
             full_block = 7
-              
-        text = (
-            f"Вы уже приступили к обучению и в настоящий момент полностью прошли **{full_block - 1} из 7** блоков обучения\n"
-            " Вы можете 📚 **Продолжить обучение** \n либо попытаться ⬆️ **Улучшить результат**, нажав на соответствующие  кнопки ниже 👇"
-        ) if current_course == 'Обучение по продажам' else (
-            f"Вы уже приступили к обучению и в настоящий момент полностью прошли **{full_completed_lessons} из 7** этапов обучения\n"
-            " Вы можете 📚 **Продолжить обучение** \n либо попытаться ⬆️ **Улучшить результат**, нажав на соответствующие  кнопки ниже 👇"
-        )
+                     
+        all_blocks_count = 7
+        
+        if current_course == "Обучение по продажам":
+            text = (
+                f"Вы уже приступили к обучению и в настоящий момент полностью прошли **{full_block - 1} из 7** блоков обучения\n"
+                " Вы можете 📚 **Продолжить обучение** \n либо попытаться ⬆️ **Улучшить результат**, нажав на соответствующие  кнопки ниже 👇"
+                ) 
+        
+        else:
+            if current_course == 'Обучение для юриста':
+                all_blocks_count = 5# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            
+            text = (
+                f"Вы уже приступили к обучению и в настоящий момент полностью прошли **{full_completed_lessons} из {all_blocks_count}** этапов обучения\n"
+                " Вы можете 📚 **Продолжить обучение** \n либо попытаться ⬆️ **Улучшить результат**, нажав на соответствующие  кнопки ниже 👇"
+                )
         
         
         
@@ -5800,7 +5812,7 @@ async def lawyer_training_step_3_handler(callback: Callback, cursor: FSMCursor, 
         
         # сообщение о тестировании с кнопкой
         test_text = get_text_to_test_block_1_lawyer()
-        await callback.send(test_text, keyboard=start_test_kb())
+        await callback.send(test_text, keyboard=start_test_kb(True))
         
         cursor.change_state(TrainingStates.lawyer['block1_questions'])
         #cursor.change_state(TrainingStates.lawyer['block_1_ready_for_test'])
@@ -5810,37 +5822,38 @@ async def lawyer_training_step_3_handler(callback: Callback, cursor: FSMCursor, 
         
 
         
-@router.on_button_callback(state(TrainingStates.lawyer['block1_questions']), lambda data: data.payload == 'start_test')
-async def lawyer_start_block1_final_test_handler(callback: Callback, cursor: FSMCursor):
-    """Переход к финальному тесту по Блоку №1 - ЮРИСТ"""
-    try:
-        logger.info(f"[INFO][lawyer_start_block1_final_test_handler] Стартовал")
-        current_course = get_current_course(cursor)
-        text = get_text_start_final_test_block_1()
+# @router.on_button_callback(state(TrainingStates.lawyer['block1_questions']), lambda data: data.payload == 'start_test')
+# async def lawyer_start_block1_final_test_handler(callback: Callback, cursor: FSMCursor):
+#     """Переход к финальному тесту по Блоку №1 - ЮРИСТ"""
+#     try:
+#         logger.info(f"[INFO][lawyer_start_block1_final_test_handler] Стартовал")
+#         current_course = get_current_course(cursor)
+#         text = get_text_start_final_test_block_1()
         
-        text = get_text_start_final_test_block_1(True)
+#         text = get_text_start_final_test_block_1(True)
         
         
-        data = cursor.get_data()
-        if not data:
-            data = dict()
-        data.update(current_question=0)
-        cursor.change_data(data)
-        await callback.send(text, keyboard=final_test_kb())
-        cursor.change_state(TrainingStates.lawyer['block_1_ready_for_test'])
+#         data = cursor.get_data()
+#         if not data:
+#             data = dict()
+#         data.update(current_question=0)
+#         cursor.change_data(data)
+#         await callback.send(text, keyboard=final_test_kb())
+#         cursor.change_state(TrainingStates.lawyer['block_1_ready_for_test'])
            
     
     except Exception as e:
         logger.error(f"[ERROR][start_block1_final_test_handler] Произошла ошибка {e}")
 
 
-@router.on_button_callback(state(TrainingStates.lawyer['block_1_ready_for_test']), lambda data: data.payload == "start_test")
+
+@router.on_button_callback(state(TrainingStates.lawyer['block1_questions']), lambda data: data.payload == "to_final_test")
 async def lawyer_start_testing_block1_handler(callback: Callback, cursor: FSMCursor):
     """Ветка ЮРИСТ - Начало тестирования по Блоку № 1"""
     try:
         logger.info("[lawyer_start_testing_block1_handler] Стартовал")
         # ЧАСТЬ 1: Закрытые вопросы (10 вопросов с вариантами A/B/C/D)
-        closed_questions = get_final_test_block_1('close')
+        closed_questions = get_final_test_block_1_lawyer('close')
         logger.info(f"[INFO][lawyer_start_testing_block1_handler] {closed_questions=}")
         
         # ЧАСТЬ 2: Открытые вопросы (5 вопросов с эталонными ответами)

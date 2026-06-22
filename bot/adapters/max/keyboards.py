@@ -140,8 +140,11 @@ def next_to_educ_to_part_kb():
     return kb.to_list()
     
 
-def start_test_kb() -> KeyboardBuilder:
-    kb = KeyboardBuilder().add(CallbackButton(text="✅ Приступить к тестированию", payload="start_test"))
+def start_test_kb(final_test_flag: bool = False) -> KeyboardBuilder:
+    if not final_test_flag:
+        kb = KeyboardBuilder().add(CallbackButton(text="✅ Приступить к тестированию", payload="start_test"))
+    else:
+        kb = KeyboardBuilder().add(CallbackButton(text="✅ Приступить к тестированию", payload="to_final_test"))
     
     return kb
 
