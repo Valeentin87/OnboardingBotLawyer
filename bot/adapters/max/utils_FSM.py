@@ -137,5 +137,12 @@ class TrainingStates:
     lawyer = {
         'block_1': 'block_1',
         'block_1_ready_for_test': 'block_1_ready_for_test',
-        'block1_questions': 'block1_questions_lawyer'  # аналог step12_testing
+        'block1_questions': 'block1_questions_lawyer',  # аналог step12_testing
+        'block_2_start': 'block_2_start',
+        'block2_section_2': 'block2_section_2',
+        'block2_questions': 'block2_questions_lawyer',
+        'block_3_start': 'block_3_start',
+        'block_4_start': 'block_4_start',
+        'block_5_start': 'block_5_start',
+        'block_6_start': 'block_6_start'
     }

@@ -20,10 +20,10 @@ from aiomax import bot
 
 
 from bot.adapters.max.data_utils import format_progress_attempts, get_max_accuracy_item, load_user_data, save_reminder, save_user_data, validate_name_surname
-from bot.adapters.max.test_utils import get_block_2_test_1_quests, get_block_2_test_2_quests, get_block_2_test_3_quests, get_block_3_test_1_quests, get_block_3_test_2_quests, get_block_3_test_3_quests, get_block_3_test_4_quests, get_block_3_test_5_quests, get_block_3_test_6_quests, get_block_4_test_1_quests, get_block_4_test_2_quests, get_block_4_test_3_quests, get_block_4_test_4_quests, get_final_test_block_1, get_final_test_block_1_lawyer, get_final_test_block_2, get_final_test_block_3, get_final_test_block_4, get_final_test_block_5, get_final_test_block_6, get_final_test_block_7, get_testing_data_1, get_testing_data_2, get_testing_data_3, get_testing_data_4, get_testing_data_5, get_testing_data_6
+from bot.adapters.max.test_utils import get_block_2_test_1_quests, get_block_2_test_2_quests, get_block_2_test_3_quests, get_block_3_test_1_quests, get_block_3_test_2_quests, get_block_3_test_3_quests, get_block_3_test_4_quests, get_block_3_test_5_quests, get_block_3_test_6_quests, get_block_4_test_1_quests, get_block_4_test_2_quests, get_block_4_test_3_quests, get_block_4_test_4_quests, get_final_test_block_1, get_final_test_block_1_lawyer, get_final_test_block_2, get_final_test_block_2_lawyer, get_final_test_block_3, get_final_test_block_4, get_final_test_block_5, get_final_test_block_6, get_final_test_block_7, get_testing_data_1, get_testing_data_2, get_testing_data_3, get_testing_data_4, get_testing_data_5, get_testing_data_6
 from bot.adapters.max.utils_FSM import AnotherEmployerStates, LawyerStates, OnboardingStates, TrainingStates, UserInfo
 from bot.core.onboarding_flow import flow_about_company, flow_another_emp_training_intro, flow_lawyer_training_intro, flow_sales_training_intro, flow_start, flow_start_change_kb, flow_start_new_empl_change_kb
-from core.content import get_another_emp_intro_text, get_block1_intro_text, get_block1_intro_text_lawyer, get_block1_section1_intro_text, get_block1_section2_intro_text, get_block1_section_3_intro_text, get_block1_section_4_intro_text, get_block1_section_5_intro_text, get_block1_section_6_intro_text, get_block2_intro_text, get_block2_section1_intro_text, get_block2_section_2_intro_text, get_block2_section_3_intro_text, get_block2_section_4_intro_text, get_block3_intro_text, get_block3_section_1_intro_text, get_block3_section_2_intro_text, get_block3_section_3_intro_text, get_block3_section_4_intro_text, get_block3_section_5_intro_text, get_block3_section_6_intro_text, get_block4_intro_text, get_block4_section_1_intro_text, get_block4_section_2_intro_text, get_block4_section_3_intro_text, get_block4_section_4_intro_text, get_block5_intro_text, get_block5_intro_video1, get_block5_intro_video10, get_block5_intro_video11, get_block5_intro_video12, get_block5_intro_video13, get_block5_intro_video14, get_block5_intro_video15, get_block5_intro_video2, get_block5_intro_video3, get_block5_intro_video4, get_block5_intro_video5, get_block5_intro_video6, get_block5_intro_video7, get_block5_intro_video8, get_block5_intro_video9, get_block6_intro_text, get_block6_section_1_intro_text, get_block7_intro_text, get_change_course_text, get_course_intro_text, get_final_another_emp_text, get_final_intro_text, get_first_day_congrats_text, get_first_mess_another_empl, get_reminder_text, get_start_text, get_text_change_department, get_text_change_status, get_text_in_process, get_text_start_final_test_block_1, get_text_start_final_test_block_2, get_text_start_final_test_block_3, get_text_start_final_test_block_4, get_text_start_final_test_block_5, get_text_start_final_test_block_6, get_text_to_final_test_block_1, get_text_to_final_test_block_2, get_text_to_final_test_block_3, get_text_to_final_test_block_4, get_text_to_final_test_block_5, get_text_to_final_test_block_6, get_text_to_final_test_block_7, get_text_to_test_block_1_lawyer, get_tomorrow_reminder_text, get_training_step_3_text, go_to_test_1_text, table_of_content_lawyer
+from core.content import get_another_emp_intro_text, get_block1_intro_text, get_block1_intro_text_lawyer, get_block1_section1_intro_text, get_block1_section2_intro_text, get_block1_section_3_intro_text, get_block1_section_4_intro_text, get_block1_section_5_intro_text, get_block1_section_6_intro_text, get_block2_intro_text, get_block2_intro_text_lawyer, get_block2_section1_intro_text, get_block2_section_1_intro_text_lawyer, get_block2_section_2_intro_text, get_block2_section_2_intro_text_lawyer, get_block2_section_3_intro_text, get_block2_section_4_intro_text, get_block3_intro_text, get_block3_section_1_intro_text, get_block3_section_2_intro_text, get_block3_section_3_intro_text, get_block3_section_4_intro_text, get_block3_section_5_intro_text, get_block3_section_6_intro_text, get_block4_intro_text, get_block4_section_1_intro_text, get_block4_section_2_intro_text, get_block4_section_3_intro_text, get_block4_section_4_intro_text, get_block5_intro_text, get_block5_intro_video1, get_block5_intro_video10, get_block5_intro_video11, get_block5_intro_video12, get_block5_intro_video13, get_block5_intro_video14, get_block5_intro_video15, get_block5_intro_video2, get_block5_intro_video3, get_block5_intro_video4, get_block5_intro_video5, get_block5_intro_video6, get_block5_intro_video7, get_block5_intro_video8, get_block5_intro_video9, get_block6_intro_text, get_block6_section_1_intro_text, get_block7_intro_text, get_change_course_text, get_course_intro_text, get_final_another_emp_text, get_final_intro_text, get_first_day_congrats_text, get_first_mess_another_empl, get_reminder_text, get_start_text, get_text_change_department, get_text_change_status, get_text_in_process, get_text_start_final_test_block_1, get_text_start_final_test_block_2, get_text_start_final_test_block_3, get_text_start_final_test_block_4, get_text_start_final_test_block_5, get_text_start_final_test_block_6, get_text_to_final_test_block_1, get_text_to_final_test_block_2, get_text_to_final_test_block_3, get_text_to_final_test_block_4, get_text_to_final_test_block_5, get_text_to_final_test_block_6, get_text_to_final_test_block_7, get_text_to_test_block_1_lawyer, get_tomorrow_reminder_text, get_training_step_3_text, go_to_test_1_text, table_of_content_lawyer
 from bot.adapters.max.keyboards import change_another_department_kb, change_course_kb, change_course_to_export_stat_kb, change_department_kb, change_status_kb, continue_studying_kb, education_kb, final_start_test_kb, final_test_kb, finish_studying_kb, main_menu_keyboard, main_one_kb, next_to_educ_to_part_kb, next_to_education_kb, start_test_kb, test_abcd_keyboard, variants_questions_kb, yes_no_kb
 #from services.claude_api import ClaudeService
 from services.ExelStatisticGenerator import ExcelStatisticGenerator
@@ -1887,6 +1887,7 @@ async def start_block1_final_test_handler(callback: Callback, cursor: FSMCursor)
         logger.error(f"[ERROR][start_block1_final_test_handler] Произошла ошибка {e}")
         
 
+@router.on_message(state(TrainingStates.lawyer['block2_questions']))
 @router.on_message(state(TrainingStates.lawyer['block1_questions']))
 @router.on_message(state(TrainingStates.block1_questions))
 async def answer_block1_question_handler(message: Message, cursor: FSMCursor):
@@ -2373,6 +2374,9 @@ async def show_results_step12(message: Message, cursor: FSMCursor, lesson_id: st
             }
         )
         
+        
+        logger.info(f"Значение state_name курсора: {cursor.get_state()} ")
+        
         if cursor.get_state() == 'block_7_final_testing':
             data = game._load_data()
             course_progress = data[user_id]['courses'][course_name]
@@ -2380,7 +2384,7 @@ async def show_results_step12(message: Message, cursor: FSMCursor, lesson_id: st
             total_answers = course_progress.get('total_answers')       
             game.record_course_completion_attempt(int(user_id), correct_answers=correct_answers, total_answers=total_answers)
         
-        if cursor.get_state() == 'step_12_testing':
+        if cursor.get_state() == 'step_12_testing' and course_name != 'Обучение для юриста':
             data = game._load_data()
             course_progress = data[user_id]['courses'][course_name]
             correct_answers = course_progress.get('correct_answers')
@@ -2393,11 +2397,21 @@ async def show_results_step12(message: Message, cursor: FSMCursor, lesson_id: st
         # ==========================================
         logger.info(f"[INFO][show_results_step12] ИТОГОВЫЙ ОТЧЁТ")
         
+        logger.info(f"[INFO][show_results_step12] Получаем обновлённый прогресс пользователя")
+        
+        progress = ''
+        
+        current_course = get_current_course(cursor)
+        # if current_course == 'Другой сотрудник':
+        progress = game.get_user_progress(message.user_id, current_course)
+        
         migration_header = ''
         if migration_state == 'step_12_testing':
             cursor_data = cursor.get_data()
+            logger.info(f'{cursor_data=}')
+            
             migration_header = '№1'
-            if cursor_data.get("current_course") == "Другой сотрудник":
+            if cursor_data.get("current_course") in ["Другой сотрудник"]:
                 migration_header = ''
         elif migration_state == 'block_2_final_testing':
             migration_header = '№2'
@@ -2478,21 +2492,24 @@ async def show_results_step12(message: Message, cursor: FSMCursor, lesson_id: st
         # ==========================================
         
         # Получаем обновлённый прогресс пользователя
-        logger.info(f"[INFO][show_results_step12] Получаем обновлённый прогресс пользователя")
+        # if course_name == "Обучение для юриста" and cursor.get_state() == 'step_12_testing':
+        #     logger.info(f'Состояние курсора: {cursor.get_state()}')
+            
+            
+        #     return
+            
         
-        progress = ''
-        
-        current_course = get_current_course(cursor)
-        if current_course == 'Другой сотрудник':
-            progress = game.get_user_progress(message.user_id, current_course)
-        else:
-            progress = game.get_user_progress(message.user_id, "Обучение по продажам")
+
+        # elif current_course == 'Обучение по продажам':
+        #     progress = game.get_user_progress(message.user_id, "Обучение по продажам")
+        # elif current_course == 'Обучение для юриста':
+        #     progress = game.get_user_progress(message.user_id, current_course)
         
         logger.info(f"[INFO][show_results_step12] {progress=}")
         
         # Получаем место пользователя в рейтинге
         logger.info(f"[INFO][show_results_step12] Получаем место пользователя в рейтинге")
-        leaderboard = game.get_all_users_progress("Обучение по продажам")
+        leaderboard = game.get_all_users_progress(course_name)
         user_rank = 0
         for i, user_data in enumerate(leaderboard, start=1):
             logger.info(f"[INFO][show_results_step12] {i=} \n{user_data=}")
@@ -2518,6 +2535,7 @@ async def show_results_step12(message: Message, cursor: FSMCursor, lesson_id: st
         # Определяем количество пройденных уроков для пользователей на курсе ДРУГОЙ СОТРУДНИК
         complet_less = 0
         completed_lesson = 0
+        total_lessons = game.total_lessons_info.get(course_name)
         
         completed_dict = {'0': 0, '1': 5, '2': 10, '3': 15, '4': 20, '5': 25, '6': 30, '7': 45}
         
@@ -2542,14 +2560,20 @@ async def show_results_step12(message: Message, cursor: FSMCursor, lesson_id: st
                     completed_lesson = 6
                 else:
                     completed_lesson = 7
+            
+            if current_course == 'Обучение для юриста':
+                completed_lesson = int(completed_lesson)
                 
             first_phrase = f"🏆 **Ваш рейтинг по итогам Блока {migration_header}**\n\n" if migration_header else "🏆 **Ваш рейтинг по итогам Блока**\n\n"
             
+                        
             rating_text = (
                 f"{first_phrase}"
                 f"👤 **Ваше имя:** {first_name} {last_name}\n"
-                f"📚 **Курс:** {'Обучение по продажам' if current_course != 'Другой сотрудник' else current_course}\n\n"
-                f"✅ **Уроков пройдено:** {completed_lesson} / {43 if current_course != 'Другой сотрудник' else 7}\n"   # f"✅ **Уроков пройдено:** {progress['lessons_completed']} / {progress['total_lessons']}\n"
+                # f"📚 **Курс:** {'Обучение по продажам' if current_course != 'Другой сотрудник' else current_course}\n\n"
+                f"📚 **Курс:** {current_course}\n\n"
+                # f"✅ **Уроков пройдено:** {completed_lesson} / {43 if current_course != 'Другой сотрудник' else 7}\n"   # f"✅ **Уроков пройдено:** {progress['lessons_completed']} / {progress['total_lessons']}\n"
+                f"✅ **Уроков пройдено:** {completed_lesson} / {total_lessons}"
                 f"📈 **Процент правильных ответов:** {max_progress['accuracy_percent']:.1f}%\n"
             )
         else:            
@@ -2573,14 +2597,18 @@ async def show_results_step12(message: Message, cursor: FSMCursor, lesson_id: st
                     completed_lesson = 6
                 else:
                     completed_lesson = 7
+            elif current_course == 'Обучение для юриста':
+                completed_lesson = int(completed_lesson)
             
             first_phrase = f"🏆 **Ваш рейтинг по итогам Блока {migration_header}**\n\n" if migration_header else "🏆 **Ваш рейтинг по итогам Блока**\n\n"
             
             rating_text = (
                 f"{first_phrase}"
                 f"👤 **Ваше имя:** {first_name} {last_name}\n"
-                f"📚 **Курс:** {'Обучение по продажам' if current_course != 'Другой сотрудник' else current_course}\n\n"
-                f"✅ **Уроков пройдено:** {completed_lesson} / {43 if current_course != 'Другой сотрудник' else 7}\n"  #  f"✅ **Уроков пройдено:** {progress[1]['lessons_completed']} / {progress[1]['total_lessons']}\n"
+                # f"📚 **Курс:** {'Обучение по продажам' if current_course != 'Другой сотрудник' else current_course}\n\n"
+                f"📚 **Курс:** {current_course}\n\n"
+                # f"✅ **Уроков пройдено:** {completed_lesson} / {43 if current_course != 'Другой сотрудник' else 7}\n"   # f"✅ **Уроков пройдено:** {progress['lessons_completed']} / {progress['total_lessons']}\n"
+                f"✅ **Уроков пройдено:** {completed_lesson} / {total_lessons}"
                 f"📈 **Процент правильных ответов:** {progress[1]['accuracy_percent']:.1f}%\n"
             )
         
@@ -2596,12 +2624,28 @@ async def show_results_step12(message: Message, cursor: FSMCursor, lesson_id: st
         # Пауза перед кнопкой продолжения
         await asyncio.sleep(5) # 2
         
-        logger.info(f'Строка 2198: {migration_header=}')
+        logger.info(f'Строка 2621: {migration_header=}')
+        
+        if course_name == 'Обучение для юриста':
+            block_intro = "Чтобы продолжить обучение, нажмите на кнопку 📚 Продолжить обучение"
+            await message.send(block_intro, format="markdown", keyboard=next_to_educ_to_part_kb())
+            if migration_header == "№1":
+                cursor.change_state(TrainingStates.lawyer['block_2_start'])
+                return
+            elif migration_header == "№2":
+                cursor.change_state(TrainingStates.lawyer['block_3_start'])
+            elif migration_header == "№3":
+                cursor.change_state(TrainingStates.lawyer['block_4_start'])
+            elif migration_header == "№4":
+                cursor.change_state(TrainingStates.lawyer['block_5_start'])
+            elif migration_header == "№5":
+                cursor.change_state(TrainingStates.lawyer['block_6_start'])
+            return
+            
         
         if migration_header == "":
             block_intro = get_final_another_emp_text()
             await message.send(block_intro, format="markdown", keyboard=education_kb(current_cource="Другой сотрудник", final_flag=True))
-            cursor.clear_state()
             return       
         if migration_header == "№1":
             block_intro = get_block2_intro_text()
@@ -5549,7 +5593,7 @@ async def flow_sales_training_handler(callback: Callback, cursor: FSMCursor):
                 all_blocks_count = 5# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             
             text = (
-                f"Вы уже приступили к обучению и в настоящий момент полностью прошли **{full_completed_lessons} из {all_blocks_count}** этапов обучения\n"
+                f"Вы уже приступили к обучению и в настоящий момент полностью прошли **{int(full_completed_lessons/2)} из {all_blocks_count}** этапов обучения\n"
                 " Вы можете 📚 **Продолжить обучение** \n либо попытаться ⬆️ **Улучшить результат**, нажав на соответствующие  кнопки ниже 👇"
                 )
         
@@ -5597,7 +5641,7 @@ async def flow_sales_training_handler(callback: Callback, cursor: FSMCursor):
         elif current_course == "Другой сотрудник":
             await callback.send(text, keyboard=continue_studying_kb(full_completed_lessons))
         elif current_course == "Обучение для юриста":
-            await callback.send(text, keyboard=continue_studying_kb(full_completed_lessons))
+            await callback.send(text, keyboard=continue_studying_kb(int(full_completed_lessons/2)))
         
         return
     except Exception as e:
@@ -5690,6 +5734,11 @@ async def continue_studying_handler(callback: Callback, cursor: FSMCursor):
             elif full_block_id == '6':
                 cursor.change_state(TrainingStates.step_11_next)
                 await continue_after_section6_handler(callback, cursor)
+        elif current_course == 'Обучение для юриста':
+            if full_block_id == '1':
+                cursor.change_state(TrainingStates.lawyer['block_2_start'])
+                await lawyer_start_block_2_handler(callback, cursor)
+                
                 
             
     except Exception as e:
@@ -5821,6 +5870,36 @@ async def lawyer_training_step_3_handler(callback: Callback, cursor: FSMCursor, 
         logger.error(f"[training_step_3_handler] Произошла ошибка {e}") 
         
 
+@router.on_button_callback(state(TrainingStates.lawyer['block2_section_2']), lambda data: data.payload.split('::')[1] == "not_first")
+async def lawyer_part2_section2_handler(callback: Callback, cursor: FSMCursor, continue_flag:bool=False):
+    """Ветка ЮРИСТ - Блок №2 Раздел №2: Отдел продаж"""
+    try:
+        logger.info("[lawyer_part2_section2_handler] Стартовал")
+        if continue_flag:
+            intro_text = get_block2_intro_text_lawyer()
+            await callback.send(intro_text)
+            await asyncio.sleep(10) # 2
+        
+        
+        # if await debounce_button_max(callback, cursor):
+        #     logger.info(f"[training_step_3_handler] Идет обработка нажмите позднее")
+        #     return      
+        await callback.message.delete()
+        intro_text = get_block2_section_2_intro_text_lawyer()
+        await callback.send(intro_text, disable_link_preview=True)
+        
+        await asyncio.sleep(2) # 15
+        
+        # сообщение о тестировании с кнопкой
+        test_text = get_text_to_test_block_1_lawyer()
+        await callback.send(test_text, keyboard=start_test_kb(True))
+        
+        cursor.change_state(TrainingStates.lawyer['block2_questions'])
+        #cursor.change_state(TrainingStates.lawyer['block_1_ready_for_test'])
+    
+    except Exception as e:
+        logger.error(f"[lawyer_part2_section2_handler] Произошла ошибка {e}") 
+ 
         
 # @router.on_button_callback(state(TrainingStates.lawyer['block1_questions']), lambda data: data.payload == 'start_test')
 # async def lawyer_start_block1_final_test_handler(callback: Callback, cursor: FSMCursor):
@@ -5904,6 +5983,97 @@ async def lawyer_start_testing_block1_handler(callback: Callback, cursor: FSMCur
     except Exception as e:
         logger.error(f"[lawyer_training_step_4_handler] Произошла ошибка {e}") 
         
+
+@router.on_button_callback(state(TrainingStates.lawyer['block2_questions']), lambda data: data.payload == "to_final_test")
+async def lawyer_start_testing_block2_sect2_handler(callback: Callback, cursor: FSMCursor):
+    """Ветка ЮРИСТ - Начало тестирования по Блоку № 2 Раздел № 2"""
+    try:
+        logger.info("[lawyer_start_testing_block2_sect2_handler] Стартовал")
+        # ЧАСТЬ 1: Закрытые вопросы (10 вопросов с вариантами A/B/C/D)
+        closed_questions = get_final_test_block_2_lawyer('close')
+        logger.info(f"[INFO][lawyer_start_testing_block2_sect2_handler] {closed_questions=}")
+        
+        # ЧАСТЬ 2: Открытые вопросы (5 вопросов с эталонными ответами)
+        open_questions = get_final_test_block_2_lawyer('open')
+        logger.info(f"[INFO][lawyer_start_testing_block2_sect2_handler] {open_questions=}")
+        
+        data = cursor.get_data()
+        logger.info(f'[lawyer_start_testing_block2_sect2_handler] до добавления вопросов в state: {data=}')
+        # Сохраняем вопросы и начинаем с первого
+    
+        if data and isinstance(data, dict):
+                data.update(
+                    closed_questions=closed_questions,
+                    open_questions=open_questions,
+                    current_question=0,
+                    closed_answers=[],  # Ответы на закрытые вопросы
+                    open_answers=[],    # Ответы на открытые вопросы
+                    test_stage="closed",  # Начинаем с закрытых вопросов
+                    migration_state = "step_12_testing"
+                    )
+        else:
+            data = dict()
+            data.update(
+                closed_questions=closed_questions,
+                open_questions=open_questions,
+                current_question=0,
+                closed_answers=[],  # Ответы на закрытые вопросы
+                open_answers=[],    # Ответы на открытые вопросы
+                test_stage="closed",  # Начинаем с закрытых вопросов
+                migration_state = "step_12_testing"
+                )
+            
+        logger.info(f'[lawyer_start_testing_block2_sect2_handler] после добавления вопросов в state: {data=}')  
+        cursor.change_data(data)
+        # Отправляем первый закрытый вопрос
+        logger.info(f'[lawyer_start_testing_block2_sect2_handler] Отправляем первый закрытый вопрос')
+        course_name = get_current_course(cursor)
+        logger.info(f'{course_name=}')
+        await send_question_step_12(callback, cursor, "final_test", "Обучение для юриста")
+
+        cursor.change_state(TrainingStates.step_12_testing)
+        
+
+    except Exception as e:
+        logger.error(f"[ERROR][lawyer_start_testing_block2_sect2_handler] Произошла ошибка {e}") 
+    
+
+
+@router.on_button_callback(state(TrainingStates.lawyer['block_2_start']), lambda data: data.payload == "next_educ_to_part_2")
+async def lawyer_start_block_2_handler(callback: Callback, cursor: FSMCursor, continue_flag:bool=False):
+    """Ветка ЮРИСТ - Обработчик завершения обучения по 1 блоку и перехода к блоку № 2 при нажатии на кнопку ПРОДОЛЖИТЬ ОБУЧЕНИЕ"""
+    try:
+        logger.info("[lawyer_start_block_2_handler] Стартовал")
+        if continue_flag:
+            intro_text = table_of_content_lawyer()
+            await callback.send(intro_text)
+            await asyncio.sleep(2) # 10
+        
+        
+        # if await debounce_button_max(callback, cursor):
+        #     logger.info(f"[training_step_3_handler] Идет обработка нажмите позднее")
+        #     return      
+        await callback.message.delete()
+        intro_text = get_block2_intro_text_lawyer()
+        await callback.send(intro_text)
+        
+        await asyncio.sleep(2) # 15
+               
+        section_1_text = get_block2_section_1_intro_text_lawyer()
+        await callback.send(section_1_text, disable_link_preview=True)
+        
+        await asyncio.sleep(2) # 15
+        
+        # сообщение о предложении перейти к 2 разделу блока № 2 с кнопкой
+        continue_text = "📚 Для того, чтобы перейти к следующему разделу, нажмите кнопку ниже 👇"
+        kb = KeyboardBuilder().add(CallbackButton(text="📚 Продолжить обучение", payload="next_education::not_first"))
+        await callback.send(continue_text, keyboard=kb)
+        
+        cursor.change_state(TrainingStates.lawyer['block2_section_2'])
+        #cursor.change_state(TrainingStates.lawyer['block_1_ready_for_test'])
+    
+    except Exception as e:
+        logger.error(f"[lawyer_start_block_2_handler] Произошла ошибка {e}")         
         
     
         

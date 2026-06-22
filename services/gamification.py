@@ -205,7 +205,10 @@ class GamificationService:
         else:
             # Если первая попытка — увеличиваем счётчик уроков
             logger.info(f'[INFO][GamificationService][update_lesson_progress] первая попытка — увеличиваем счётчик уроков')
-            course_progress['lessons_completed'] += 1
+            if course_name == 'Обучение для юриста':
+                course_progress['lessons_completed'] += 2
+            else:
+                course_progress['lessons_completed'] += 1
         
         # Обновляем статистику (добавляем новый результат)
         course_progress['correct_answers'] += correct_count
@@ -218,19 +221,18 @@ class GamificationService:
             accuracy = (course_progress['correct_answers'] / course_progress['total_answers']) * 100
             course_progress['accuracy_percent'] = round(accuracy, 1)
         else:
-            course_progress['accuracy_percent'] = 0.0
-        
+            course_progress['accuracy_percent'] 
         # Сохраняем результат урока
         if course_name == "Обучение для юриста":
             logger.info(f"Проверяем наличие блоков section в переменной data[user_key]['lesson_results'][course_name]")
             checking_data = data[user_key]['lesson_results'][course_name]
             all_keys_in_checking_data = list(checking_data.keys())
             logger.info(f'{all_keys_in_checking_data=}')
-            all_section_keys = (key for key in all_keys_in_checking_data if key.startswith('section')), None
+            all_section_keys = [key for key in all_keys_in_checking_data if key.startswith('section')]
             logger.info(f'{all_section_keys=}')
-            if all_keys_in_checking_data:
+            if all_keys_in_checking_data and all_section_keys:
                 logger.info("Отдельные блоки ветки ЮРИСТ уже пройдены, проверим номер последнего блока")
-                last_section_name = list(all_section_keys)[-1]
+                last_section_name = all_section_keys[-1]
                 last_section_number = int(last_section_name[-1])
                 logger.info(f"Номер последнего блока, пройденного в ветке ЮРИСТ: {last_section_number=}")
                 if last_section_number < 5:

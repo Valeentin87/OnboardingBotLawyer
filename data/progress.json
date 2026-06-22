@@ -34,7 +34,7 @@
       "username": "Тестовый Пользователь",
       "first_name": "Тестовый",
       "last_name": "Пользователь",
-      "last_activity": "2026-06-22T08:59:00.456594"
+      "last_activity": "2026-06-22T21:25:41.116052"
     },
     "courses": {
       "Обучение по продажам": {
@@ -50,6 +50,13 @@
         "correct_answers": 0,
         "total_answers": 0,
         "accuracy_percent": 0.0
+      },
+      "Обучение для юриста": {
+        "lessons_completed": 4,
+        "total_lessons": 12,
+        "correct_answers": 8,
+        "total_answers": 30,
+        "accuracy_percent": 26.7
       }
     },
     "lesson_results": {
@@ -90,7 +97,19 @@
           "accuracy": 13.3
         }
       },
-      "Другой сотрудник": {}
+      "Другой сотрудник": {},
+      "Обучение для юриста": {
+        "section_1": {
+          "correct_count": 3,
+          "total_count": 15,
+          "accuracy": 20.0
+        },
+        "section_2": {
+          "correct_count": 5,
+          "total_count": 15,
+          "accuracy": 33.3
+        }
+      }
     },
     "completed_attempts": [
       {
@@ -116,22 +135,6 @@
         "accuracy_percent": 26.8,
         "lessons_completed": 43,
         "course_name": "Обучение по продажам"
-      },
-      {
-        "date_completed": "2026-06-17T18:33:07.535586",
-        "correct_answers": 13,
-        "total_answers": 45,
-        "accuracy_percent": 28.9,
-        "lessons_completed": 43,
-        "course_name": "Другой сотрудник"
-      },
-      {
-        "date_completed": "2026-06-22T08:59:00.480226",
-        "correct_answers": 8,
-        "total_answers": 15,
-        "accuracy_percent": 53.3,
-        "lessons_completed": 7,
-        "course_name": "Другой сотрудник"
       }
     ]
   },
