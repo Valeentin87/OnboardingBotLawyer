@@ -1,6 +1,6 @@
 {
   "51490094": {
-    "start_date": "28.05",
+    "start_date": "03.06",
     "reminder_sent": true
   },
   "20759321": {
@@ -48,7 +48,11 @@
     "reminder_sent": false
   },
   "175082514": {
-    "start_date": "09.06",
+    "start_date": "01.06",
+    "reminder_sent": true
+  },
+  "219566997": {
+    "start_date": "03.06",
     "reminder_sent": true
   }
 }
