@@ -96,11 +96,13 @@ def format_progress_attempts(attempts: list) -> str:
     Returns:
         Строка с форматированным сообщением
     """
+    logger.info('Стартовал')    
     if not attempts:
         return "Нет данных о попытках прохождения курса."
 
     # Находим максимальный accuracy_percent
     max_accuracy = max(attempt['accuracy_percent'] for attempt in attempts)
+    logger.info(f'{max_accuracy=}')
 
     formatted_blocks = []
 
@@ -119,7 +121,13 @@ def format_progress_attempts(attempts: list) -> str:
         elif attempt["course_name"] == "Другой сотрудник":
             block_lines = [
                 f"🗓️ Дата прохождения: {formatted_date}",
-                f"✅ Уроков пройдено: 7 / 7",
+                f"✅ Уроков пройдено: {attempt['lessons_completed']} / 7",
+                f"📈 Процент правильных ответов: {attempt['accuracy_percent']}%"
+            ]
+        elif attempt["course_name"] == "Обучение для юриста":
+            block_lines = [
+                f"🗓️ Дата прохождения: {formatted_date}",
+                f"✅ Уроков пройдено: {attempt['lessons_completed']} / 12",
                 f"📈 Процент правильных ответов: {attempt['accuracy_percent']}%"
             ]
             

@@ -237,6 +237,8 @@ class GamificationService:
                 logger.info(f"Номер последнего блока, пройденного в ветке ЮРИСТ: {last_section_number=}")
                 if last_section_number < 5:
                     lesson_id = f'section_{last_section_number + 1}'
+                else:
+                    lesson_id = 'final_test'
             else:
                 lesson_id = 'section_1'
             

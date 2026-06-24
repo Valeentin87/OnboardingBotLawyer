@@ -142,7 +142,11 @@ class TrainingStates:
         'block2_section_2': 'block2_section_2',
         'block2_questions': 'block2_questions_lawyer',
         'block_3_start': 'block_3_start',
+        'block3_questions': 'block3_questions_lawyer',
         'block_4_start': 'block_4_start',
+        'block4_questions': 'block4_questions_lawyer',
         'block_5_start': 'block_5_start',
-        'block_6_start': 'block_6_start'
+        'block5_questions': 'block5_questions_lawyer',
+        'final_test_start': 'final_test_start',
+        'final_test_questions': 'final_test_questions_lawyer',
     }

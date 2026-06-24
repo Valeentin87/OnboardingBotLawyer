@@ -110,7 +110,7 @@ class ExcelStatisticGenerator:
                         full_name,
                         user_id,
                         course_name,
-                        f"{lessons_completed if course_name == 'Обучение по продажам' else 7}/{total_lessons if course_name == 'Обучение по продажам' else 7}",
+                        f"{lessons_completed if course_name  in ['Обучение по продажам', 'Обучение для юриста'] else 7}/{total_lessons if course_name  in ['Обучение по продажам', 'Обучение для юриста'] else 7}",
                         accuracy,
                 date_completed
             ])
@@ -130,7 +130,7 @@ class ExcelStatisticGenerator:
                         full_name,
                         user_id,
                         course_name,
-                        f"{lessons_completed}/{total_lessons if course_name == 'Обучение по продажам' else 7}",
+                        f"{lessons_completed}/{total_lessons if course_name  in ['Обучение по продажам', 'Обучение для юриста'] else 7}",
                         accuracy,
                         "Попытка не завершена"
                     ])

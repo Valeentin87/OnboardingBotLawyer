@@ -3,7 +3,8 @@ import os, sys
 from aiomax.buttons import CallbackButton, MessageButton, KeyboardBuilder
 
 COURSES_NAMES = {"Обучение по продажам": 'sales_training',
-                 "Другой сотрудник": 'another_employee'}
+                 "Другой сотрудник": 'another_employee',
+                 "Обучение для юриста": "lawyer"}
 
 def test_abcd_keyboard():
     """
@@ -88,6 +89,8 @@ def change_course_to_export_stat_kb(courses_name: list[str]):
             course_name = '📚 ' + course_name
         elif course_name == 'Другой сотрудник':
             course_name = '💢 ' + 'Обучение по продукту'
+        elif course_name == "Обучение для юриста":
+            course_name = '⚖️' + 'Обучение для юриста'
         print(f'{course=}')
         export_stat_kb.row(CallbackButton(text=course_name, payload=f'export_data::{course}'))
     export_stat_kb.row(CallbackButton(text="🎯 По всем курсам", payload="all_courses"))
