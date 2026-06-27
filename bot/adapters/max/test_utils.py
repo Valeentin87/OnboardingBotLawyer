@@ -2934,7 +2934,7 @@ def get_final_test_block_3_lawyer(type_questions:str) -> list[dict]:
             "correct": "D"
         },
         {
-            "question": "Где хранится шаблон договора аренды? ",
+            "question": "Где хранится шаблон договора аренды?",
             "options": [
                 "A) Б24",
                 "B) Рабочий стол - ЮРИСТ - Бланки, шаблоны, образцы документов",
@@ -3051,7 +3051,7 @@ def get_final_test_block_4_lawyer(type_questions:str) -> list[dict]:
             "correct": "D"
         },
         {
-            "question": " Как часто, как правило, проверяются и обновляются доверенности?",
+            "question": "Как часто, как правило, проверяются и обновляются доверенности?",
             "options": [
                 "A) Раз в квартал",
                 "B) Раз в месяц",
