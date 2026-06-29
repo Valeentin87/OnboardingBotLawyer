@@ -691,9 +691,9 @@ class GamificationService:
         return list(set(all_courses_name))
     
     
-    def get_full_completed_lessons(self, course_name: str, user_id: int):
+    def get_full_completed_lessons(self, course_name: str, user_id: int) -> tuple[float|int, float|int]:
         """Возвращает количество полных уроков, завершенных пользователем
-        по курсу обучения, переданному в аргументе"""
+        по курсу обучения, переданному в аргументе и текущий процент успешного выполнения курса"""
         try:
             logger.info(f'{course_name=}')
             data = self._load_data()
@@ -714,9 +714,10 @@ class GamificationService:
             total_lessons = current_course_data.get("lessons_completed") if current_course_data else 0
             
             full_completed_lessons = lessons_completed if total_lessons else None
-            logger.info(f'{data=}\n{current_course_data=}\n{full_completed_lessons=}')
+            current_persent = current_course_data.get("accuracy_percent", 0)
+            logger.info(f'{data=}\n{current_course_data=}\n{full_completed_lessons=}\n{current_persent=}')
             
-            return full_completed_lessons
+            return full_completed_lessons, current_persent
         except Exception as e:
             logger.error(f'Произошла ошибка: {e}')
         

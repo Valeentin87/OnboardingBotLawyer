@@ -2418,7 +2418,7 @@ async def show_results_step12(message: Message, cursor: FSMCursor, lesson_id: st
         
         
         logger.info(f"Значение state_name курсора: {cursor.get_state()} ")
-        full_completed_lessons = game.get_full_completed_lessons(course_name = course_name, user_id = user_id)
+        full_completed_lessons, current_persent = game.get_full_completed_lessons(course_name = course_name, user_id = user_id)
         logger.info(f'{full_completed_lessons=}')
         
         if cursor.get_state() == 'block_7_final_testing':
@@ -2483,8 +2483,12 @@ async def show_results_step12(message: Message, cursor: FSMCursor, lesson_id: st
         result_text = f"📊 **Результаты финального теста по Блоку {migration_header}**\n\n" if migration_header else f"📊 **Результаты финального теста по Блоку**\n\n"
         result_text += f"**Правильных ответов: {total_correct}/{total_questions}**\n\n"
         result_text += f"━━━━━━━━━━━━━━━━━━━━\n\n"
-        result_text += f"**Часть 1 (тестовые вопросы):** {closed_correct}/10\n"
-        result_text += f"**Часть 2 (открытые вопросы):** {open_correct}/5\n"
+        if full_completed_lessons == 12 and cursor_data.get("current_course") == "Обучение для юриста":
+            result_text += f"**Часть 1 (тестовые вопросы):** {closed_correct}/20\n"
+            result_text += f"**Часть 2 (открытые вопросы):** {open_correct}/10\n"
+        else:
+            result_text += f"**Часть 1 (тестовые вопросы):** {closed_correct}/10\n"
+            result_text += f"**Часть 2 (открытые вопросы):** {open_correct}/5\n"
         result_text += f"**Итоговый процент:** {accuracy_percent:.1f}%\n\n"
         
         if total_correct == total_questions:
@@ -2589,12 +2593,16 @@ async def show_results_step12(message: Message, cursor: FSMCursor, lesson_id: st
         # Определяем количество пройденных уроков для пользователей на курсе ДРУГОЙ СОТРУДНИК
         complet_less = 0
         completed_lesson = 0
+        current_persent = 0
         total_lessons = game.total_lessons_info.get(course_name)
         
         completed_dict = {'0': 0, '1': 5, '2': 10, '3': 15, '4': 20, '5': 25, '6': 30, '7': 45}
         
+        logger.info(f'{progress=}')
+        
         if isinstance(progress, list):
             max_progress = get_max_accuracy_item(progress)
+            logger.info(f'{max_progress=}')
             completed_lesson = max_progress['lessons_completed']
             logger.info(f'{completed_lesson=}')
             if current_course == 'Другой сотрудник':
@@ -2618,7 +2626,7 @@ async def show_results_step12(message: Message, cursor: FSMCursor, lesson_id: st
             first_phrase = f"🏆 **Ваш рейтинг по итогам Блока {migration_header}**\n\n" if migration_header else "🏆 **Ваш рейтинг по итогам Блока**\n\n"
             
             if current_course == 'Обучение для юриста':
-                full_completed_lessons = game.get_full_completed_lessons(course_name = current_course, user_id = user_id)
+                full_completed_lessons, current_persent = game.get_full_completed_lessons(course_name = current_course, user_id = user_id)
                 completed_lesson = int(completed_lesson)
                 first_phrase = f"🏆 **Ваш рейтинг по итогам Блока {int(full_completed_lessons/2)}**\n\n"
                 if completed_lesson == 12:
@@ -2630,9 +2638,13 @@ async def show_results_step12(message: Message, cursor: FSMCursor, lesson_id: st
                 # f"📚 **Курс:** {'Обучение по продажам' if current_course != 'Другой сотрудник' else current_course}\n\n"
                 f"📚 **Курс:** {current_course}\n\n"
                 # f"✅ **Уроков пройдено:** {completed_lesson} / {43 if current_course != 'Другой сотрудник' else 7}\n"   # f"✅ **Уроков пройдено:** {progress['lessons_completed']} / {progress['total_lessons']}\n"
-                f"✅ **Уроков пройдено:** {completed_lesson} / {total_lessons}\n"
-                f"📈 **Процент правильных ответов:** {max_progress['accuracy_percent']:.1f}%\n"
+                f"✅ **Уроков пройдено:** {full_completed_lessons} / {total_lessons}\n"
             )
+            
+            if full_completed_lessons != 12 and current_course == 'Обучение для юриста':
+                rating_text += f"📈 **Процент правильных ответов:** {current_persent}%\n"
+            else:
+                rating_text += f"📈 **Процент правильных ответов:** {max_progress['accuracy_percent']:.1f}%\n"
         else:            
             
             completed_lesson = progress[1]['lessons_completed']
@@ -2659,7 +2671,7 @@ async def show_results_step12(message: Message, cursor: FSMCursor, lesson_id: st
                     completed_lesson = 7
             elif current_course == 'Обучение для юриста':
                 completed_lesson = int(completed_lesson)
-                full_completed_lessons = game.get_full_completed_lessons(course_name = current_course, user_id = user_id)
+                full_completed_lessons, current_persent = game.get_full_completed_lessons(course_name = current_course, user_id = user_id)
                 completed_lesson = int(completed_lesson)
                 first_phrase = f"🏆 **Ваш рейтинг по итогам Блока {int(full_completed_lessons/2)}**\n\n"
                 if completed_lesson == 12:
@@ -2671,9 +2683,12 @@ async def show_results_step12(message: Message, cursor: FSMCursor, lesson_id: st
                 # f"📚 **Курс:** {'Обучение по продажам' if current_course != 'Другой сотрудник' else current_course}\n\n"
                 f"📚 **Курс:** {current_course}\n\n"
                 # f"✅ **Уроков пройдено:** {completed_lesson} / {43 if current_course != 'Другой сотрудник' else 7}\n"   # f"✅ **Уроков пройдено:** {progress['lessons_completed']} / {progress['total_lessons']}\n"
-                f"✅ **Уроков пройдено:** {completed_lesson} / {total_lessons}\n"
-                f"📈 **Процент правильных ответов:** {progress[1]['accuracy_percent']:.1f}%\n"
+                f"✅ **Уроков пройдено:** {full_completed_lessons} / {total_lessons}\n"
             )
+            if full_completed_lessons != 12 and current_course == 'Обучение для юриста':
+                rating_text += f"📈 **Процент правильных ответов:** {current_persent}%\n"
+            else:
+                rating_text += f"📈 **Процент правильных ответов:** {max_progress['accuracy_percent']:.1f}%\n"
         
         if user_rank > 0:
             rating_text += f"🥇 **Ваше место в рейтинге:** #{user_rank}\n"
@@ -5623,7 +5638,7 @@ async def flow_sales_training_handler(callback: Callback, cursor: FSMCursor):
         
         logger.info(f'{lessons_completed=}')
         
-        full_completed_lessons = game.get_full_completed_lessons(course_name = current_course, user_id = user_id)
+        full_completed_lessons, current_persent = game.get_full_completed_lessons(course_name = current_course, user_id = user_id)
         
         full_block = 1
                 
@@ -6528,10 +6543,9 @@ async def lawyer_start_final_test_handler(callback: Callback, cursor: FSMCursor,
         #     logger.info(f"[training_step_3_handler] Идет обработка нажмите позднее")
         #     return      
         await callback.message.delete()
-        intro_text = get_to_final_intro_text_lawyer()
-        await callback.send(intro_text)       
+        intro_text = get_to_final_intro_text_lawyer()  
         
-        await asyncio.sleep(15) # 2
+        await asyncio.sleep(2) # 2
         
         before_test_text = get_text_to_final_test_lawyer()
         await callback.send(intro_text, keyboard=start_test_kb(True))    
